@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-void criaImagem (Cor ** matriz);
 
 typedef struct cor {
 	unsigned int R = 0;
@@ -11,6 +10,19 @@ typedef struct cor {
 	unsigned int G = 0;
 	//O defalut eh a cor ser branco
 } Cor;
+
+void criaImagem (Cor ** matriz) {
+	FILE *desenho = fopen("Imagem.ppm", "w");
+	fputs("P3\n640 480\n255\n", desenho);
+	unsigned short i, j;
+
+	for (i = 0; i < 480; i++) {
+		for (j = 0; j < 640; j++) {
+			fprintf(desenho, "%hu %hu %hu", *matriz[i][j]->R, *matriz[i][j]->B, *matriz[i][j]->G);
+		}
+	}
+
+}
 
 int main (void) {
 	Cor ** matriz;
@@ -24,18 +36,4 @@ int main (void) {
 	}
 
 	criaImagem(matriz);
-}
-
-
-void criaImagem (Cor ** matriz) {
-	FILE *desenho = fopen("Imagem.ppm", "w");
-	fputs("P3\n640 480\n255\n", desenho);
-	unsigned short i, j;
-
-	for (i = 0; i < 480; i++) {
-		for (j = 0; j < 640; j++) {
-			fprintf(desenho, "%hu %hu %hu", matriz[i][j]->R, matriz[i][j]->B, matriz[i][j]->G);
-		}
-	}
-
 }
