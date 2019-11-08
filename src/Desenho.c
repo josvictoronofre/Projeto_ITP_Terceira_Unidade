@@ -12,7 +12,7 @@ void criaDesenho (Cor primitiva) {
 }
 
 Cor leDesenho (char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas) {
-	unsigned short i; //Indice pra alocacao da matriz
+	unsigned short i, j; //Indices pra atribuicao da matriz
 
 	FILE *desenho = fopen("Imagem.ppm", "r"); //Abre o arquivo no formato leitura
 
@@ -20,10 +20,26 @@ Cor leDesenho (char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolun
 
 	Cor **MatrizDesenho;
 
+	MatrizDesenho = alocaMatriz(MatrizDesenho, *Mlinhas, *Mcolunas); //Aloca a matriz usando a funcao
+
+	for (i = 0; i < Mlinhas; i++) {
+		for (j = 0; j < Mcolunas; j++) {
+			fscanf(desenho, "%hu %hu %hu\n", MatrizDesenho[i][j].R, MatrizDesenho[i][j].G, MatrizDesenho[i][j].B); //Atribui valores pra cada ponto da matriz
+		}
+	}
+
+	fclose(desenho);
+
+	return MatrizDesenho;
+
+}
+
+Cor alocaMatriz (Cor **MatrizDesenho, const unsigned short Nlinhas, const unsigned short Ncolunas) {
+	unsigned short i; //Indice pra alocacao da matriz
 	//Alocando dinamicamente a matriz do desenho
 	MatrizDesenho = (Cor **) calloc(*Mlinhas, sizeof(Cor*));
 	for (i = 0; i < *Mcolunas; i++) {
 		MatrizDesenho[i] = (Cor *) calloc(*Mcolunas, sizeof(Cor));
 	}
-
+	return MatrizDesenho;
 }
