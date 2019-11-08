@@ -53,7 +53,7 @@ void salvaDesenho (Cor **MatrizDesenho, char tipoImagem, unsigned short Mlinhas,
 
 	for (i = 0; i < Mlinhas; i++) {
 		for (j = 0; j < Mcolunas; j++) {
-			fprintf(desenho, "%hu %hu %hu\n", MatrizDesenho[i][j].R, MatrizDesenho[i][j].G, MatrizDesenho[i][j].B);
+			fprintf(desenho, "%hu %hu %hu\n", MatrizDesenho[i][j].R, MatrizDesenho[i][j].G, MatrizDesenho[i][j].B); //Printa no arquivo as especificacoes de cada pixel
 		}
 	}
 	free(MatrizDesenho);
