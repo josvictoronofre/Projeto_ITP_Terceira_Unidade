@@ -6,6 +6,6 @@ typedef struct cor {
 } Cor;
 
 char tipoImagem[3];
-unsigned short Mlinhas, Mcolunas;
+unsigned short Mlinhas, Mcolunas, MaximoPixels;
 
 #endif

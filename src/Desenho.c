@@ -11,12 +11,12 @@ void criaDesenho (Cor primitiva) {
 
 }
 
-Cor leDesenho (char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas) {
+Cor leDesenho (char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas, unsigned short MaximoPixels) {
 	unsigned short i, j; //Indices pra atribuicao da matriz
 
 	FILE *desenho = fopen("Imagem.ppm", "r"); //Abre o arquivo no formato leitura
 
-	fscanf(desenho, "%s\n%hu%hu\n", tipoImagem, Mlinhas, Mcolunas); //Salva o tipo de imagem PPM e as dimensoes
+	fscanf(desenho, "%s\n%hu%hu\n%hu\n", tipoImagem, Mlinhas, Mcolunas, MaximoPixels); //Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
 
 	Cor **MatrizDesenho;
 
@@ -42,4 +42,20 @@ Cor alocaMatriz (Cor **MatrizDesenho, const unsigned short Nlinhas, const unsign
 		MatrizDesenho[i] = (Cor *) calloc(*Mcolunas, sizeof(Cor));
 	}
 	return MatrizDesenho;
+}
+
+void salvaDesenho (Cor **MatrizDesenho, char tipoImagem, unsigned short Mlinhas, unsigned short Mcolunas, unsigned short MaximoPixels) {
+	unsigned short i, j; //Indices pra controle da matriz
+
+	FIlE *desenho = fopen("Imagem.ppm", "w"); //Abre o arquivo no formato escrita
+
+	fprintf(desenho, "%s\n%hu %hu\n%hu\n", tipoImagem, Mcolunas, Mlinhas, MaximoPixels); //Printa o tipo de arquivo PPM, as dimensoes e o valor maximo pra cada componente do pixel
+
+	for (i = 0; i < Mlinhas; i++) {
+		for (j = 0; j < Mcolunas; j++) {
+			fprintf(desenho, "%hu %hu %hu\n", MatrizDesenho[i][j].R, MatrizDesenho[i][j].G, MatrizDesenho[i][j].B);
+		}
+	}
+	free(MatrizDesenho);
+	fclose(desenho);
 }
