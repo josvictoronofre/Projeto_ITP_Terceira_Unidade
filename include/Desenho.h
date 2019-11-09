@@ -5,9 +5,9 @@
 
 void criaDesenho (Cor primitiva);
 
-Cor leDesenho (char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas, unsigned short MaximoPixels);
+void leDesenho (Cor **MatrizDesenho, char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas, unsigned short MaximoPixels);
 
-Cor alocaMatriz (Cor **MatrizDesenho, const unsigned short Nlinhas, const unsigned short Ncolunas);
+void alocaMatriz (Cor **MatrizDesenho, const unsigned short Nlinhas, const unsigned short Ncolunas);
 
 void salvaDesenho (Cor ** MatrizDesenho, char tipoImagem[], unsigned short Mlinhas, unsigned short Mcolunas, unsigned short MaximoPixels);
 

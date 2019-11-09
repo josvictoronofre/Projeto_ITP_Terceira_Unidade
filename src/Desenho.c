@@ -17,16 +17,14 @@ void criaDesenho (Cor primitiva) {
 }
 
 //Le as informacoes de pixel do arquivo e passa pra matriz
-Cor leDesenho (char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas, unsigned short MaximoPixels) {
+void leDesenho (Cor **MatrizDesenho, char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas, unsigned short MaximoPixels) {
 	unsigned short i, j; //Indices pra atribuicao da matriz
 
 	FILE *desenho = fopen("Imagem.ppm", "r"); //Abre o arquivo no formato leitura
 
 	fscanf(desenho, "%s\n%hu%hu\n%hu\n", tipoImagem, Mlinhas, Mcolunas, MaximoPixels); //Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
 
-	Cor **MatrizDesenho;
-
-	**MatrizDesenho =(Cor **) alocaMatriz(MatrizDesenho, *Mlinhas, *Mcolunas); //Aloca a matriz usando a funcao
+	alocaMatriz(MatrizDesenho); //Aloca a matriz usando a funcao
 
 	for (i = 0; i < *Mlinhas; i++) {
 		for (j = 0; j < *Mcolunas; j++) {
@@ -36,20 +34,17 @@ Cor leDesenho (char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolun
 
 	fclose(desenho);
 
-	return MatrizDesenho;
-
 }
 
 
 //Funcao que aloca dinamicamente a matriz na memoria
-Cor alocaMatriz (Cor **MatrizDesenho, const unsigned short Nlinhas, const unsigned short Ncolunas) {
+void alocaMatriz (Cor **MatrizDesenho, const unsigned short Nlinhas, const unsigned short Ncolunas) {
 	unsigned short i; //Indice pra alocacao da matriz
 	//Alocando dinamicamente a matriz do desenho
 	MatrizDesenho = (Cor **) calloc(Nlinhas, sizeof(Cor*));
 	for (i = 0; i < Ncolunas; i++) {
 		MatrizDesenho[i] = (Cor *) calloc(Ncolunas, sizeof(Cor));
 	}
-	return **MatrizDesenho;
 }
 
 //Salva as alteracoes da matriz no arquivo e libera a matriz da memoria
