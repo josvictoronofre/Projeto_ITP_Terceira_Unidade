@@ -5,26 +5,27 @@
 
 //cria o desenho usando como base a cor primitiva escolhida pelo usuario
 void criaDesenho (Cor primitiva) {
+	unsigned short i;
 	FILE *desenho = fopen("Imagem.ppm", "w"); //Abre o arquivo no formato escrita
 	
 	fprintf(desenho, "P3\n640 480\n255\n"); //Printa no arquivo o formato, tipo e valor maximo pra cada pixel
 
-	for (i = 0; i < 307200;i++) {
-		fpritnf(desenho, "%hu %hu %hu\n", primitiva.R, primitiva.G, primitiva.B); //Printa as informacoes dos pixels baseado na cor primitiva
+	for (i = 0; i < 307200; i++) {
+		fprintf(desenho, "%hu %hu %hu\n", primitiva.R, primitiva.G, primitiva.B); //Printa as informacoes dos pixels baseado na cor primitiva
 	}
 	fclose(desenho); //Salva as alteracoes
 
 }
 
 //Le as informacoes de pixel do arquivo e passa pra matriz
-void leDesenho (Cor **MatrizDesenho, char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas, unsigned short MaximoPixels) {
+void leDesenho (Cor **MatrizDesenho, char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas, unsigned short *MaximoPixels) {
 	unsigned short i, j; //Indices pra atribuicao da matriz
 
 	FILE *desenho = fopen("Imagem.ppm", "r"); //Abre o arquivo no formato leitura
 
 	fscanf(desenho, "%s\n%hu%hu\n%hu\n", tipoImagem, Mlinhas, Mcolunas, MaximoPixels); //Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
 
-	alocaMatriz(MatrizDesenho); //Aloca a matriz usando a funcao
+	alocaMatriz(MatrizDesenho, *Mlinhas, *Mcolunas); //Aloca a matriz usando a funcao
 
 	for (i = 0; i < *Mlinhas; i++) {
 		for (j = 0; j < *Mcolunas; j++) {
