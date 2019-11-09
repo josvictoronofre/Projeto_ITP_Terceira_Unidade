@@ -1,4 +1,4 @@
-#include "desenho.h"
+#include "Desenho.h"
 
 int main (void) {
 Cor primitiva = {255,255,255}; //O default da cor branco

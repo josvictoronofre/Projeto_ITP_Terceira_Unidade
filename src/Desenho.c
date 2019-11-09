@@ -1,4 +1,6 @@
 #include "Desenho.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 
 //cria o desenho usando como base a cor primitiva escolhida pelo usuario
@@ -24,10 +26,10 @@ Cor leDesenho (char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolun
 
 	Cor **MatrizDesenho;
 
-	MatrizDesenho = alocaMatriz(MatrizDesenho, *Mlinhas, *Mcolunas); //Aloca a matriz usando a funcao
+	**MatrizDesenho =(Cor **) alocaMatriz(MatrizDesenho, *Mlinhas, *Mcolunas); //Aloca a matriz usando a funcao
 
-	for (i = 0; i < Mlinhas; i++) {
-		for (j = 0; j < Mcolunas; j++) {
+	for (i = 0; i < *Mlinhas; i++) {
+		for (j = 0; j < *Mcolunas; j++) {
 			fscanf(desenho, "%hu %hu %hu\n", MatrizDesenho[i][j].R, MatrizDesenho[i][j].G, MatrizDesenho[i][j].B); //Atribui valores pra cada ponto da matriz
 		}
 	}
@@ -43,18 +45,18 @@ Cor leDesenho (char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolun
 Cor alocaMatriz (Cor **MatrizDesenho, const unsigned short Nlinhas, const unsigned short Ncolunas) {
 	unsigned short i; //Indice pra alocacao da matriz
 	//Alocando dinamicamente a matriz do desenho
-	MatrizDesenho = (Cor **) calloc(*Mlinhas, sizeof(Cor*));
-	for (i = 0; i < *Mcolunas; i++) {
-		MatrizDesenho[i] = (Cor *) calloc(*Mcolunas, sizeof(Cor));
+	MatrizDesenho = (Cor **) calloc(Nlinhas, sizeof(Cor*));
+	for (i = 0; i < Ncolunas; i++) {
+		MatrizDesenho[i] = (Cor *) calloc(Ncolunas, sizeof(Cor));
 	}
-	return MatrizDesenho;
+	return **MatrizDesenho;
 }
 
 //Salva as alteracoes da matriz no arquivo e libera a matriz da memoria
 void salvaDesenho (Cor **MatrizDesenho, char tipoImagem[], unsigned short Mlinhas, unsigned short Mcolunas, unsigned short MaximoPixels) {
 	unsigned short i, j; //Indices pra controle da matriz
 
-	FIlE *desenho = fopen("Imagem.ppm", "w"); //Abre o arquivo no formato escrita
+	FILE *desenho = fopen("Imagem.ppm", "w"); //Abre o arquivo no formato escrita
 
 	fprintf(desenho, "%s\n%hu %hu\n%hu\n", tipoImagem, Mcolunas, Mlinhas, MaximoPixels); //Printa o tipo de arquivo PPM, as dimensoes e o valor maximo pra cada componente do pixel
 
