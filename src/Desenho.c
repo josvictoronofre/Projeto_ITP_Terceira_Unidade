@@ -1,16 +1,20 @@
 #include "Desenho.h"
 
+
+//cria o desenho usando como base a cor primitiva escolhida pelo usuario
 void criaDesenho (Cor primitiva) {
 	FILE *desenho = fopen("Imagem.ppm", "w"); //Abre o arquivo no formato escrita
 	
 	fprintf(desenho, "P3\n640 480\n255\n"); //Printa no arquivo o formato, tipo e valor maximo pra cada pixel
 
-	fpritnf(desenho, "%hu %hu %hu\n", primitiva.R, primitiva.G, primitiva.B); //Printa as informacoes dos pixels baseado na cor primitiva
-
+	for (i = 0; i < 307200;i++) {
+		fpritnf(desenho, "%hu %hu %hu\n", primitiva.R, primitiva.G, primitiva.B); //Printa as informacoes dos pixels baseado na cor primitiva
+	}
 	fclose(desenho); //Salva as alteracoes
 
 }
 
+//Le as informacoes de pixel do arquivo e passa pra matriz
 Cor leDesenho (char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas, unsigned short MaximoPixels) {
 	unsigned short i, j; //Indices pra atribuicao da matriz
 
@@ -34,6 +38,8 @@ Cor leDesenho (char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolun
 
 }
 
+
+//Funcao que aloca dinamicamente a matriz na memoria
 Cor alocaMatriz (Cor **MatrizDesenho, const unsigned short Nlinhas, const unsigned short Ncolunas) {
 	unsigned short i; //Indice pra alocacao da matriz
 	//Alocando dinamicamente a matriz do desenho
@@ -44,7 +50,8 @@ Cor alocaMatriz (Cor **MatrizDesenho, const unsigned short Nlinhas, const unsign
 	return MatrizDesenho;
 }
 
-void salvaDesenho (Cor **MatrizDesenho, char tipoImagem, unsigned short Mlinhas, unsigned short Mcolunas, unsigned short MaximoPixels) {
+//Salva as alteracoes da matriz no arquivo e libera a matriz da memoria
+void salvaDesenho (Cor **MatrizDesenho, char tipoImagem[], unsigned short Mlinhas, unsigned short Mcolunas, unsigned short MaximoPixels) {
 	unsigned short i, j; //Indices pra controle da matriz
 
 	FIlE *desenho = fopen("Imagem.ppm", "w"); //Abre o arquivo no formato escrita
@@ -56,6 +63,6 @@ void salvaDesenho (Cor **MatrizDesenho, char tipoImagem, unsigned short Mlinhas,
 			fprintf(desenho, "%hu %hu %hu\n", MatrizDesenho[i][j].R, MatrizDesenho[i][j].G, MatrizDesenho[i][j].B); //Printa no arquivo as especificacoes de cada pixel
 		}
 	}
-	free(MatrizDesenho);
-	fclose(desenho);
+	free(MatrizDesenho); //Desaloca a matriz da memoria pra liberar espaco
+	fclose(desenho); //Salva as alteracoes no arquivo
 }
