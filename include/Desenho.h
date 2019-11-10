@@ -11,6 +11,8 @@ void leDesenho (Imagem *img);
 
 void alocaMatriz (Imagem *img);
 
+void liberaMemoria (Imagem *img);
+
 void salvaDesenho (Cor ** MatrizDesenho, char tipoImagem[], unsigned short Mlinhas, unsigned short Mcolunas, unsigned short MaximoPixels);
 
 #endif

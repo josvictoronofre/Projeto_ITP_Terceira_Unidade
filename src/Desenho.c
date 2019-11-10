@@ -5,9 +5,10 @@
 void criaDesenho (Imagem *img, Cor primitiva) {
 	
 	unsigned short i, j;
-
 	img->tipoImagem = (char *) malloc(3*sizeof(char));
-	img->tipoImagem = "P3";
+	img->tipoImagem[0] = 'P';
+	img->tipoImagem[1] = '3';
+	img->tipoImagem[2] = '\0';
 	img->Nlinhas = 640;
 	img->Ncolunas = 480;
 	img->Maximopixels = 255;
@@ -50,7 +51,9 @@ void leDesenho (Imagem *img) {
 
 	for (i = 0; i < img->Nlinhas; i++) {
 		for (j = 0; j < img->Ncolunas; j++) {
-			fscanf(desenho, "%d %d %d\n", &img->MatrizDesenho[i][j].R, &img->MatrizDesenho[i][j].G, &img->MatrizDesenho[i][j].B); //Atribui valores pra cada ponto da matriz
+			fscanf(desenho, "%d", &img->MatrizDesenho[i][j].R);
+			fscanf(desenho, "%d", &img->MatrizDesenho[i][j].G);
+			fscanf(desenho, "%d", &img->MatrizDesenho[i][j].B);
 		}
 	}
 
@@ -68,6 +71,17 @@ void alocaMatriz (Imagem *img) {
 		img->MatrizDesenho[i] = (Cor *) malloc(img->Ncolunas*sizeof(Cor));
 	}
 }
+
+
+void liberaMatriz (Imagem *img) {
+	unsigned short i;
+
+	for (i = 0; i < img->Nlinhas; i++) {
+		free(img->MatrizDesenho[i]);
+	}
+	free(img->MatrizDesenho);
+}
+
 
 //Salva as alteracoes da matriz no arquivo e libera a matriz da memoria
 void salvaDesenho (Cor **MatrizDesenho, char tipoImagem[], unsigned short Mlinhas, unsigned short Mcolunas, unsigned short MaximoPixels) {
