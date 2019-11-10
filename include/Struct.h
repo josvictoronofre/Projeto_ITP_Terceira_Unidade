@@ -2,12 +2,12 @@
 #define Struct_h
 
 typedef struct cor {
-	unsigned short R, G, B;
+	int R, G, B;
 } Cor;
 
 typedef struct imagem {
 	char *tipoImagem;
-	unsigned short Nlinhas, Ncolunas, Maximopixels;
+	int Nlinhas, Ncolunas, Maximopixels;
 	Cor **MatrizDesenho;
 } Imagem;
 

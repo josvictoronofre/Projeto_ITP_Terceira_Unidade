@@ -1,30 +1,28 @@
 #include "Desenho.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 
 //cria o desenho usando como base a cor primitiva escolhida pelo usuario
-void criaDesenho (Cor **MatrizDesenho, Cor primitiva, char *tipoImagem, unsigned short *Nlinhas, unsigned short *Ncolunas, unsigned short *MaximoPixels) {
+void criaDesenho (Imagem *img, Cor primitiva) {
 	
 	unsigned short i, j;
 
-	tipoImagem = (char *) malloc(3*sizeof(char));
-	tipoImagem = "P3";
-	*Nlinhas = 640;
-	*Ncolunas = 480;
-	*MaximoPixels = 255;
+	img->tipoImagem = (char *) malloc(3*sizeof(char));
+	img->tipoImagem = "P3";
+	img->Nlinhas = 640;
+	img->Ncolunas = 480;
+	img->Maximopixels = 255;
 
 	FILE *desenho = fopen("Imagem.ppm", "w"); //Abre o arquivo no formato escrita
 
-	fprintf(desenho, "%s\n", tipoImagem);
+	fprintf(desenho, "%s\n", img->tipoImagem);
 
-	fprintf(desenho, "%hu %hu\n", *Nlinhas, *Ncolunas);
+	fprintf(desenho, "%d %d\n", img->Nlinhas, img->Ncolunas);
 
-	fprintf(desenho, "%hu\n", *MaximoPixels);
+	fprintf(desenho, "%d\n", img->Maximopixels);
 
-	for (i = 0; i < *Nlinhas; i++) {
-		for (j = 0; j < *Ncolunas; j++) {
-			fprintf(desenho, "%hu %hu %hu\n", primitiva.R, primitiva.G, primitiva.B);
+	for (i = 0; i < img->Nlinhas; i++) {
+		for (j = 0; j < img->Ncolunas; j++) {
+			fprintf(desenho, "%d %d %d\n", primitiva.R, primitiva.G, primitiva.B);
 		}
 	}
 
@@ -33,22 +31,26 @@ void criaDesenho (Cor **MatrizDesenho, Cor primitiva, char *tipoImagem, unsigned
 }
 
 //Le as informacoes de pixel do arquivo e passa pra matriz
-void leDesenho (Cor **MatrizDesenho, char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas, unsigned short *MaximoPixels) {
+void leDesenho (Imagem *img) {
 	unsigned short i, j; //Indices pra atribuicao da matriz
 
-	FILE *desenho = fopen("Imagem.ppm", "r"); //Abre o arquivo no formato leitura
+	FILE *desenho = fopen("Imagem.ppm", "r");
 
-	alocaMatriz(MatrizDesenho, *Nlinhas, *Ncolunas);
+	if (desenho == NULL) {
+		printf("Nao ta lendo o arquivo\n");
+	}
 
-	fscanf(desenho, "%s\n", tipoImagem); //Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
+	fgets(img->tipoImagem, 3, desenho); //Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
 
-	fscanf(desenho, "%hu %hu\n", Mlinhas, Mcolunas);
+	fscanf(desenho, "%d %d\n", &img->Nlinhas, &img->Ncolunas);
 
-	fscanf(desenho, "%hu\n", MaximoPixels);
+	fscanf(desenho, "%d\n", &img->Maximopixels);
 
-	for (i = 0; i < *Mlinhas; i++) {
-		for (j = 0; j < *Mcolunas; j++) {
-			fscanf(desenho, "%hu %hu %hu\n", &MatrizDesenho[i][j].R, &MatrizDesenho[i][j].G, &MatrizDesenho[i][j].B); //Atribui valores pra cada ponto da matriz
+	alocaMatriz(img);
+
+	for (i = 0; i < img->Nlinhas; i++) {
+		for (j = 0; j < img->Ncolunas; j++) {
+			fscanf(desenho, "%d %d %d\n", &img->MatrizDesenho[i][j].R, &img->MatrizDesenho[i][j].G, &img->MatrizDesenho[i][j].B); //Atribui valores pra cada ponto da matriz
 		}
 	}
 
@@ -58,12 +60,12 @@ void leDesenho (Cor **MatrizDesenho, char *tipoImagem, unsigned short *Mlinhas, 
 
 
 //Funcao que aloca dinamicamente a matriz na memoria
-void alocaMatriz (Cor **MatrizDesenho, const unsigned short Nlinhas, const unsigned short Ncolunas) {
+void alocaMatriz (Imagem *img) {
 	unsigned short i; //Indice pra alocacao da matriz
 	//Alocando dinamicamente a matriz do desenho
-	MatrizDesenho = (Cor **) calloc(Nlinhas, sizeof(Cor*));
-	for (i = 0; i < Ncolunas; i++) {
-		MatrizDesenho[i] = (Cor *) calloc(Ncolunas, sizeof(Cor));
+	img->MatrizDesenho = (Cor **) malloc(img->Nlinhas*sizeof(Cor *));
+	for (i = 0; i < img->Nlinhas; i++) {
+		img->MatrizDesenho[i] = (Cor *) malloc(img->Ncolunas*sizeof(Cor));
 	}
 }
 
