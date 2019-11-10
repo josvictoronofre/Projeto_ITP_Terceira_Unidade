@@ -4,16 +4,31 @@
 
 
 //cria o desenho usando como base a cor primitiva escolhida pelo usuario
-void criaDesenho (Cor primitiva) {
-	unsigned short i;
-	FILE *desenho = fopen("Imagem.ppm", "w"); //Abre o arquivo no formato escrita
+void criaDesenho (Cor **MatrizDesenho, Cor primitiva, char *tipoImagem, unsigned short *Nlinhas, unsigned short *Ncolunas, unsigned short *MaximoPixels) {
 	
-	fprintf(desenho, "P3\n640 480\n255\n"); //Printa no arquivo o formato, tipo e valor maximo pra cada pixel
+	unsigned short i, j;
 
-	for (i = 0; i < 307200; i++) {
-		fprintf(desenho, "%hu %hu %hu\n", primitiva.R, primitiva.G, primitiva.B); //Printa as informacoes dos pixels baseado na cor primitiva
+	tipoImagem = (char *) malloc(3*sizeof(char));
+	tipoImagem = "P3";
+	*Nlinhas = 640;
+	*Ncolunas = 480;
+	*MaximoPixels = 255;
+
+	FILE *desenho = fopen("Imagem.ppm", "w"); //Abre o arquivo no formato escrita
+
+	fprintf(desenho, "%s\n", tipoImagem);
+
+	fprintf(desenho, "%hu %hu\n", *Nlinhas, *Ncolunas);
+
+	fprintf(desenho, "%hu\n", *MaximoPixels);
+
+	for (i = 0; i < *Nlinhas; i++) {
+		for (j = 0; j < *Ncolunas; j++) {
+			fprintf(desenho, "%hu %hu %hu\n", primitiva.R, primitiva.G, primitiva.B);
+		}
 	}
-	fclose(desenho); //Salva as alteracoes
+
+
 
 }
 
@@ -23,13 +38,17 @@ void leDesenho (Cor **MatrizDesenho, char *tipoImagem, unsigned short *Mlinhas, 
 
 	FILE *desenho = fopen("Imagem.ppm", "r"); //Abre o arquivo no formato leitura
 
-	fscanf(desenho, "%s\n%hu%hu\n%hu\n", tipoImagem, Mlinhas, Mcolunas, MaximoPixels); //Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
+	alocaMatriz(MatrizDesenho, *Nlinhas, *Ncolunas);
 
-	alocaMatriz(MatrizDesenho, *Mlinhas, *Mcolunas); //Aloca a matriz usando a funcao
+	fscanf(desenho, "%s\n", tipoImagem); //Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
+
+	fscanf(desenho, "%hu %hu\n", Mlinhas, Mcolunas);
+
+	fscanf(desenho, "%hu\n", MaximoPixels);
 
 	for (i = 0; i < *Mlinhas; i++) {
 		for (j = 0; j < *Mcolunas; j++) {
-			fscanf(desenho, "%hu %hu %hu\n", MatrizDesenho[i][j].R, MatrizDesenho[i][j].G, MatrizDesenho[i][j].B); //Atribui valores pra cada ponto da matriz
+			fscanf(desenho, "%hu %hu %hu\n", &MatrizDesenho[i][j].R, &MatrizDesenho[i][j].G, &MatrizDesenho[i][j].B); //Atribui valores pra cada ponto da matriz
 		}
 	}
 

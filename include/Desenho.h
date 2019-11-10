@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void criaDesenho (Cor primitiva);
+void criaDesenho (Cor **MatrizDesenho, Cor primitiva, char *tipoImagem, unsigned short *Nlinhas, unsigned short *Ncolunas, unsigned short *MaximoPixels);
 
 void leDesenho (Cor **MatrizDesenho, char *tipoImagem, unsigned short *Mlinhas, unsigned short *Mcolunas, unsigned short *MaximoPixels);
 

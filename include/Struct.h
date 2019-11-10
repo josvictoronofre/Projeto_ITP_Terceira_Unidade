@@ -6,7 +6,7 @@ typedef struct cor {
 } Cor;
 
 typedef struct imagem {
-	char tipoImagem[3];
+	char *tipoImagem;
 	unsigned short Nlinhas, Ncolunas, Maximopixels;
 	Cor **MatrizDesenho;
 } Imagem;
