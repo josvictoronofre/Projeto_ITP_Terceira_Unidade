@@ -4,15 +4,14 @@
 #include "Struct.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void criaDesenho (Imagem *img, Cor primitiva);
 
 void leDesenho (Imagem *img);
 
-void alocaMatriz (Imagem *img);
+void alocaMemoria (Imagem *img);
 
 void liberaMemoria (Imagem *img);
-
-void salvaDesenho (Cor ** MatrizDesenho, char tipoImagem[], unsigned short Mlinhas, unsigned short Mcolunas, unsigned short MaximoPixels);
 
 #endif
