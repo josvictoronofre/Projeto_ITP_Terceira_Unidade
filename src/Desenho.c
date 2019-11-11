@@ -6,8 +6,10 @@ void criaDesenho (Imagem *img, Cor primitiva) {
 	
 	FILE *desenho = fopen("Imagem", "w"); //Abre o arquivo no formato escrita
 
-	unsigned short i, j;
+	unsigned short i, j; //Indices pra matriz
 
+	
+	//atribui os valores corretos
 	img->Nlinhas = 640;
 	img->Ncolunas = 480;
 	img->Maximopixels = 255;
@@ -19,12 +21,14 @@ void criaDesenho (Imagem *img, Cor primitiva) {
 	img->tipoImagem[2] = '\0';
 	
 
+	//Imprime os valores no arquivo
 	fprintf(desenho, "%s\n", img->tipoImagem);
 
 	fprintf(desenho, "%d %d\n", img->Nlinhas, img->Ncolunas);
 
 	fprintf(desenho, "%d\n", img->Maximopixels);
 
+	//Monta a matriz a partir da cor escolhida pelo usuario
 	for (i = 0; i < img->Nlinhas; i++) {
 		for (j = 0; j < img->Ncolunas; j++) {
 			img->MatrizDesenho[i][j].R = primitiva.R;
@@ -35,13 +39,14 @@ void criaDesenho (Imagem *img, Cor primitiva) {
 
 	for (i = 0; i < img->Nlinhas; i++) {
 		for (j = 0; j < img->Ncolunas; j++) {
+			//Imprime a informacao da matriz no arquivo
 			fprintf(desenho, "%d %d %d\n", img->MatrizDesenho[i][j].R, img->MatrizDesenho[i][j].G, img->MatrizDesenho[i][j].B);
 		}
 	}
 
-	fclose(desenho);
+	fclose(desenho); //Salva as alteracoes
 
-	liberaMemoria(img);
+	liberaMemoria(img); //Libera a memoria
 
 }
 
@@ -55,7 +60,8 @@ void leDesenho (Imagem *img) {
 		printf("Nao foi possivel ler o arquivo!\n");
 	}
 
-	fgets(img->tipoImagem, 3, desenho); //Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
+	//Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
+	fgets(img->tipoImagem, 3, desenho); 
 
 	fscanf(desenho, "%d %d\n", &img->Nlinhas, &img->Ncolunas);
 
@@ -63,6 +69,7 @@ void leDesenho (Imagem *img) {
 
 	alocaMemoria(img);
 
+	//Pega as informacoes de cada pixel do arquivo e passa pra matriz
 	for (i = 0; i < img->Nlinhas; i++) {
 		for (j = 0; j < img->Ncolunas; j++) {
 			fscanf(desenho, "%d", &img->MatrizDesenho[i][j].R);
@@ -71,13 +78,14 @@ void leDesenho (Imagem *img) {
 		}
 	}
 
-	fclose(desenho);
+	fclose(desenho); //Fecha o arquivo
 }
 
 
-//Funcao que aloca dinamicamente a matriz na memoria
+//Aloca dinamicamente a matriz na memoria
 void alocaMemoria (Imagem *img) {
 	unsigned short i; //Indice pra alocacao da matriz
+	
 	//Alocando dinamicamente a matriz do desenho
 	img->MatrizDesenho = (Cor **) malloc(img->Nlinhas*sizeof(Cor *));
 	for (i = 0; i < img->Nlinhas; i++) {
@@ -85,12 +93,14 @@ void alocaMemoria (Imagem *img) {
 	}
 }
 
-
+//Libera o espaco de memoria da matriz
 void liberaMemoria (Imagem *img) {
-	unsigned short i;
+	unsigned short i; //Indice pra percorrer as linhas
 
+	//Libera as colunas
 	for (i = 0; i < img->Nlinhas; i++) {
-		free(img->MatrizDesenho[i]);
+		free(img->MatrizDesenho[i]); 
 	}
+	//Libera as linhas
 	free(img->MatrizDesenho);
 }
