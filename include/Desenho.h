@@ -14,4 +14,6 @@ void alocaMemoria (Imagem *img);
 
 void liberaMemoria (Imagem *img);
 
+void salvaDesenho (Imagem *img);
+
 #endif

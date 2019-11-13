@@ -21,13 +21,6 @@ void criaDesenho (Imagem *img, Cor primitiva) {
 	img->tipoImagem[2] = '\0';
 	
 
-	//Imprime os valores no arquivo
-	fprintf(desenho, "%s\n", img->tipoImagem);
-
-	fprintf(desenho, "%d %d\n", img->Nlinhas, img->Ncolunas);
-
-	fprintf(desenho, "%d\n", img->Maximopixels);
-
 	//Monta a matriz a partir da cor escolhida pelo usuario
 	for (i = 0; i < img->Nlinhas; i++) {
 		for (j = 0; j < img->Ncolunas; j++) {
@@ -37,12 +30,7 @@ void criaDesenho (Imagem *img, Cor primitiva) {
 		}
 	}
 
-	for (i = 0; i < img->Nlinhas; i++) {
-		for (j = 0; j < img->Ncolunas; j++) {
-			//Imprime a informacao da matriz no arquivo
-			fprintf(desenho, "%d %d %d\n", img->MatrizDesenho[i][j].R, img->MatrizDesenho[i][j].G, img->MatrizDesenho[i][j].B);
-		}
-	}
+	salvaDesenho(img);
 
 	fclose(desenho); //Salva as alteracoes
 
@@ -103,4 +91,23 @@ void liberaMemoria (Imagem *img) {
 	}
 	//Libera as linhas
 	free(img->MatrizDesenho);
+}
+
+//Salva as alteracoes no arquivo
+void salvaDesenho (Imagem *img) {
+	unsigned short i, j;
+
+	FILE *desenho = fopen("Imagem", "w");
+
+	fprintf(desenho, "%s\n", img->tipoImagem);
+
+	fprintf(desenho, "%d %d\n", img->Nlinhas, img->Ncolunas);
+
+	fprintf(desenho, "%d\n", img->Maximopixels);
+
+	for (i = 0; i < img->Nlinhas; i++) {
+		for (j = 0; j < img->Ncolunas; j++) {
+			fprintf(desenho, "%d %d %d\n", img->MatrizDesenho[i][j].R, img->MatrizDesenho[i][j].G, img->MatrizDesenho[i][j].B);
+		}
+	}
 }
