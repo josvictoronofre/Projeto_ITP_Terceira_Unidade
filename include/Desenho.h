@@ -16,4 +16,6 @@ void liberaMemoria (Imagem *img);
 
 void salvaDesenho (Imagem *img);
 
+void escolheCor (Cor *primitiva);
+
 #endif

@@ -111,3 +111,16 @@ void salvaDesenho (Imagem *img) {
 		}
 	}
 }
+
+
+//Escolhe a cor primitiva
+void escolheCor (Cor *primitiva) {
+	while (1==1) {
+		scanf("%d %d %d", &primitiva->R, &primitiva->G, &primitiva->B);
+
+		if (primitiva->R >= 0 && primitiva->R < 256 && primitiva->G >= 0 && primitiva->G < 256 && primitiva->B >= 0 && primitiva->B < 256) {
+			break;
+		} else 
+			printf("Valor de componentes invalido!\n");
+	}
+}

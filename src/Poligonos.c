@@ -2,11 +2,11 @@
 
 
 void desenhaReta (Imagem *img, Cor primitiva) {
-	unsigned short x1, x2, y1, y2, x3, y3, i;
+	int x1, x2, y1, y2, x3, y3, i;
 
-	scanf("%d %d", x1, y1);
+	scanf("%d %d", &x1, &y1);
 
-	scanf("%d %d", x2, y2);
+	scanf("%d %d", &x2, &y2);
 
 	leDesenho(img);
 
@@ -19,7 +19,7 @@ void desenhaReta (Imagem *img, Cor primitiva) {
 			img->MatrizDesenho[x1][y1].G = primitiva.G;
 			img->MatrizDesenho[x1][y1].B = primitiva.B;
 			x3++;
-			y3 += (float) (y2 - y1) / (x2 - x1);
+			y3 += (y2 - y1) / (x2 - x1);
 		}
 	}
 
