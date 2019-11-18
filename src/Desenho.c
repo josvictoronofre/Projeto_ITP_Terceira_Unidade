@@ -10,17 +10,19 @@ void criaDesenho (Imagem *img, Cor primitiva) {
 
 	
 	//atribui os valores corretos
-	img->Nlinhas = 640;
-	img->Ncolunas = 480;
-	img->Maximopixels = 255;
+	printf("Especifique a largura e a altura, respectivamente, da imagem:\n");
 
-	alocaMemoria(img);
+	scanf("%d %d", &img->Nlinhas, &img->Ncolunas);
 
 	img->tipoImagem[0] = 'P';
 	img->tipoImagem[1] = '3';
 	img->tipoImagem[2] = '\0';
-	
 
+	img->Maximopixels = 255;
+
+	alocaMemoria(img);
+
+	
 	//Monta a matriz a partir da cor escolhida pelo usuario
 	for (i = 0; i < img->Nlinhas; i++) {
 		for (j = 0; j < img->Ncolunas; j++) {
@@ -116,11 +118,27 @@ void salvaDesenho (Imagem *img) {
 //Escolhe a cor primitiva
 void escolheCor (Cor *primitiva) {
 	while (1==1) {
+		
+		printf("Especifique o valor dos componentes R, G e B respectivamente:\n");
+
 		scanf("%d %d %d", &primitiva->R, &primitiva->G, &primitiva->B);
 
 		if (primitiva->R >= 0 && primitiva->R < 256 && primitiva->G >= 0 && primitiva->G < 256 && primitiva->B >= 0 && primitiva->B < 256) {
 			break;
 		} else 
 			printf("Valor de componentes invalido!\n");
+	}
+}
+
+//Reinicia a imagem com a cor escolhida
+void limpaDesenho (Imagem *img, Cor primitiva) {
+	unsigned short i, j;
+
+	for (i = 0; i < img->Nlinhas; i++) {
+		for (j = 0; j < img->Ncolunas; j++) {
+			img->MatrizDesenho[i][j].R = primitiva.R;
+			img->MatrizDesenho[i][j].G = primitiva.G;
+			img->MatrizDesenho[i][j].B = primitiva.B;
+		}
 	}
 }

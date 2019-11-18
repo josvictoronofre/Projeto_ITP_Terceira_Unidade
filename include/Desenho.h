@@ -18,4 +18,6 @@ void salvaDesenho (Imagem *img);
 
 void escolheCor (Cor *primitiva);
 
+void limpaDesenho(Imagem *img, Cor primitiva);
+
 #endif

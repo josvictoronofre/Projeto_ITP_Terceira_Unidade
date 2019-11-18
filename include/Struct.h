@@ -13,4 +13,8 @@ typedef struct imagem {
 	Cor **MatrizDesenho;
 } Imagem;
 
+typedef struct ponto {
+	int x, y;
+} Ponto;
+
 #endif

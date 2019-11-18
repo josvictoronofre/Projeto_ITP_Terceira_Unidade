@@ -1,28 +1,23 @@
 #include "Poligonos.h"
 
 
-void desenhaReta (Imagem *img, Cor primitiva) {
-	int x1, x2, y1, y2, x3, y3, i, angulo;
+void desenhaRetangulo (Imagem *img, Cor primitiva) {
+	unsigned short int x1, y1, altura, largura, i , j;
+	float angulo;
 
-	scanf("%d %d", &x1, &y1);
+	printf("Especifique os valores x e y do ponto inicial:\n");
 
-	scanf("%d %d", &x2, &y2);
+	scanf("%hu %hu", &x1, &y1);
 
-	leDesenho(img);
+	printf("Especifique a altura e a largura do retangulo:\n");
 
-	x3 = x1;
-	y3 = y1;
+	scanf("%hu %hu", &altura, &largura);
 
-	angulo = (float) (y2 - y1) / (x2 - x1);
-
-	if (y2 = y1) {
-		while (x3 != x2) {
-			img->MatrizDesenho[x3][y3].R = primitiva.R;
-			img->MatrizDesenho[x3][y3].G = primitiva.G;
-			img->MatrizDesenho[x3][y3].B = primitiva.B;
-			x3++;
+	for (i = y1; i < altura; i++) {
+		for (j = x1; j < largura; j++) {
+				img->MatrizDesenho[i][j].R = primitiva.R;
+				img->MatrizDesenho[i][j].G = primitiva.G;
+				img->MatrizDesenho[i][j].B = primitiva.B;
 		}
 	}
-
-	salvaDesenho(img);
 }

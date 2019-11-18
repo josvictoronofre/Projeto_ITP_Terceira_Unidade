@@ -3,6 +3,6 @@
 
 #include "Desenho.h"
 
-void desenhaReta (Imagem *img, Cor primitiva);
+void desenhaRetangulo (Imagem *img, Cor primitiva);
 
 #endif
