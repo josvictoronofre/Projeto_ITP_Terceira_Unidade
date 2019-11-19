@@ -5,4 +5,5 @@
 
 void desenhaRetangulo (Imagem *img, Cor primitiva);
 
+
 #endif

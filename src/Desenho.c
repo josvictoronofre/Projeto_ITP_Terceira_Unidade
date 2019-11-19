@@ -99,6 +99,11 @@ void liberaMemoria (Imagem *img) {
 void salvaDesenho (Imagem *img) {
 	unsigned short i, j;
 
+	if (img->MatrizDesenho == NULL) {
+		printf("Nao existe uma informacao valida para ser salva no arquivo!\n");
+		return;
+	}
+
 	FILE *desenho = fopen("Imagem", "w");
 
 	fprintf(desenho, "%s\n", img->tipoImagem);

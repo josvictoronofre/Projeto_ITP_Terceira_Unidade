@@ -2,22 +2,34 @@
 
 
 void desenhaRetangulo (Imagem *img, Cor primitiva) {
-	unsigned short int x1, y1, altura, largura, i , j;
-	float angulo;
+	int x, y, i, j, altura, largura;
 
-	printf("Especifique os valores x e y do ponto inicial:\n");
+	printf("Insira os valores x e y do retangulo:\n");
 
-	scanf("%hu %hu", &x1, &y1);
+	scanf("%d %d", &x, &y);
 
-	printf("Especifique a altura e a largura do retangulo:\n");
+	printf("Insira a altura e largura do retangulo:\n");
 
-	scanf("%hu %hu", &altura, &largura);
+	scanf("%d %d", &altura, &largura);
 
-	for (i = y1; i < altura; i++) {
-		for (j = x1; j < largura; j++) {
-				img->MatrizDesenho[i][j].R = primitiva.R;
-				img->MatrizDesenho[i][j].G = primitiva.G;
-				img->MatrizDesenho[i][j].B = primitiva.B;
-		}
+	for (i = 0; i < largura; i++) {
+		img->MatrizDesenho[y][x+i].R = primitiva.R;
+		img->MatrizDesenho[y][x+i].G = primitiva.G;
+		img->MatrizDesenho[y][x+i].B = primitiva.B;
+
+		img->MatrizDesenho[y+altura][x+i].R = primitiva.R;
+		img->MatrizDesenho[y+altura][x+i].G = primitiva.G;
+		img->MatrizDesenho[y+altura][x+i].B = primitiva.B;
+
+	}
+
+	for (j = 0; j < altura; j++) {
+		img->MatrizDesenho[y+j][x].R = primitiva.R;
+		img->MatrizDesenho[y+j][x].G = primitiva.G;
+		img->MatrizDesenho[y+j][x].B = primitiva.B;
+
+		img->MatrizDesenho[y+j][x+largura].R = primitiva.R;
+		img->MatrizDesenho[y+j][x+largura].G = primitiva.G;
+		img->MatrizDesenho[y+j][x+largura].B = primitiva.B;
 	}
 }

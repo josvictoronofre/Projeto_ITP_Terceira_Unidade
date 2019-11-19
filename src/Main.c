@@ -30,7 +30,7 @@ int main (void) {
 		else if (strcmp(controle, "exit") == 0) {
 			ativador++;
 		}
-		else if (strcmp(controle, "reta") == 0) {
+		else if (strcmp(controle, "rect") == 0) {
 			desenhaRetangulo(&desenho, primitiva);
 		}
 	}
