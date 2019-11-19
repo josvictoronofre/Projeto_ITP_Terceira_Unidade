@@ -3,7 +3,8 @@
 
 #include "Desenho.h"
 
-void desenhaRetangulo (Imagem *img, Cor primitiva);
+void poligonoRetangulo (Imagem *img, Cor primitiva);
 
+void posicaoXY (int *x, int *y, int linhas, int colunas);
 
 #endif

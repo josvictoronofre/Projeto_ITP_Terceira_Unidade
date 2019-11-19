@@ -38,6 +38,8 @@ void criaDesenho (Imagem *img, Cor primitiva) {
 
 	liberaMemoria(img); //Libera a memoria
 
+	printf("Imagem gerada com sucesso!\n");
+
 }
 
 //Le as informacoes de pixel do arquivo e passa pra matriz
@@ -48,7 +50,8 @@ void leDesenho (Imagem *img) {
 
 	if (desenho == NULL) {
 		printf("Nao foi possivel ler o arquivo!\n");
-	}
+	} else
+		printf("Imagem carregada com sucesso!\n");
 
 	//Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
 	fgets(img->tipoImagem, 3, desenho); 
@@ -122,22 +125,31 @@ void salvaDesenho (Imagem *img) {
 
 //Escolhe a cor primitiva
 void escolheCor (Cor *primitiva) {
-	while (1==1) {
-		
+		int pivoR, pivoG, pivoB;
+
 		printf("Especifique o valor dos componentes R, G e B respectivamente:\n");
 
-		scanf("%d %d %d", &primitiva->R, &primitiva->G, &primitiva->B);
+		scanf("%d %d %d", &pivoR, &pivoG, &pivoB);
 
-		if (primitiva->R >= 0 && primitiva->R < 256 && primitiva->G >= 0 && primitiva->G < 256 && primitiva->B >= 0 && primitiva->B < 256) {
-			break;
-		} else 
-			printf("Valor de componentes invalido!\n");
-	}
+		//Se as cores escolhidas nao forem aceitaveis ele nao salva as alteracoes
+		if (pivoR < 0 || pivoR > 255 || pivoG < 0 || pivoG > 255 || pivoB < 0 || pivoB > 255)
+			printf("Valores de componentes invalidos!\n");
+		else {
+			primitiva->R = pivoR;
+			primitiva->G = pivoG;
+			primitiva->B = pivoB;
+		}
+
 }
 
 //Reinicia a imagem com a cor escolhida
 void limpaDesenho (Imagem *img, Cor primitiva) {
 	unsigned short i, j;
+
+	if (img->MatrizDesenho == NULL) {
+		printf("Nao existe uma informacao valida para ser salva no arquivo!\n");
+		return;
+	}
 
 	for (i = 0; i < img->Nlinhas; i++) {
 		for (j = 0; j < img->Ncolunas; j++) {

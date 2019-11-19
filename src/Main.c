@@ -31,7 +31,7 @@ int main (void) {
 			ativador++;
 		}
 		else if (strcmp(controle, "rect") == 0) {
-			desenhaRetangulo(&desenho, primitiva);
+			poligonoRetangulo(&desenho, primitiva);
 		}
 	}
 
