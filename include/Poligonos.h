@@ -5,6 +5,8 @@
 
 void poligonoRetangulo (Imagem *img, Cor primitiva);
 
-void posicaoXY (int *x, int *y, int linhas, int colunas);
+void desenhaReta (Imagem *img, Cor primitiva);
+
+void checaPonto (int *x, int *y, const int xmax, const int ymax);
 
 #endif

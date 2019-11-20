@@ -6,13 +6,13 @@ void criaDesenho (Imagem *img, Cor primitiva) {
 	
 	FILE *desenho = fopen("Imagem", "w"); //Abre o arquivo no formato escrita
 
-	unsigned short i, j; //Indices pra matriz
+	int i, j; //Indices pra matriz
 
 	
 	//atribui os valores corretos
 	printf("Especifique a largura e a altura, respectivamente, da imagem:\n");
 
-	scanf("%d %d", &img->Nlinhas, &img->Ncolunas);
+	scanf("%d %d", &img->Ncolunas, &img->Nlinhas);
 
 	img->tipoImagem[0] = 'P';
 	img->tipoImagem[1] = '3';
@@ -34,8 +34,6 @@ void criaDesenho (Imagem *img, Cor primitiva) {
 
 	salvaDesenho(img);
 
-	fclose(desenho); //Salva as alteracoes
-
 	liberaMemoria(img); //Libera a memoria
 
 	printf("Imagem gerada com sucesso!\n");
@@ -44,7 +42,7 @@ void criaDesenho (Imagem *img, Cor primitiva) {
 
 //Le as informacoes de pixel do arquivo e passa pra matriz
 void leDesenho (Imagem *img) {
-	unsigned short i, j; //Indices pra atribuicao da matriz
+	int i, j; //Indices pra atribuicao da matriz
 
 	FILE *desenho = fopen("Imagem", "r");
 
@@ -56,7 +54,7 @@ void leDesenho (Imagem *img) {
 	//Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
 	fgets(img->tipoImagem, 3, desenho); 
 
-	fscanf(desenho, "%d %d\n", &img->Nlinhas, &img->Ncolunas);
+	fscanf(desenho, "%d %d\n", &img->Ncolunas, &img->Nlinhas);
 
 	fscanf(desenho, "%d\n", &img->Maximopixels);
 
@@ -77,7 +75,7 @@ void leDesenho (Imagem *img) {
 
 //Aloca dinamicamente a matriz na memoria
 void alocaMemoria (Imagem *img) {
-	unsigned short i; //Indice pra alocacao da matriz
+	int i; //Indice pra alocacao da matriz
 	
 	//Alocando dinamicamente a matriz do desenho
 	img->MatrizDesenho = (Cor **) malloc(img->Nlinhas*sizeof(Cor *));
@@ -100,7 +98,7 @@ void liberaMemoria (Imagem *img) {
 
 //Salva as alteracoes no arquivo
 void salvaDesenho (Imagem *img) {
-	unsigned short i, j;
+	int i, j;
 
 	if (img->MatrizDesenho == NULL) {
 		printf("Nao existe uma informacao valida para ser salva no arquivo!\n");
@@ -111,7 +109,7 @@ void salvaDesenho (Imagem *img) {
 
 	fprintf(desenho, "%s\n", img->tipoImagem);
 
-	fprintf(desenho, "%d %d\n", img->Nlinhas, img->Ncolunas);
+	fprintf(desenho, "%d %d\n", img->Ncolunas, img->Nlinhas);
 
 	fprintf(desenho, "%d\n", img->Maximopixels);
 
@@ -120,6 +118,7 @@ void salvaDesenho (Imagem *img) {
 			fprintf(desenho, "%d %d %d\n", img->MatrizDesenho[i][j].R, img->MatrizDesenho[i][j].G, img->MatrizDesenho[i][j].B);
 		}
 	}
+	fclose(desenho);
 }
 
 
@@ -144,7 +143,7 @@ void escolheCor (Cor *primitiva) {
 
 //Reinicia a imagem com a cor escolhida
 void limpaDesenho (Imagem *img, Cor primitiva) {
-	unsigned short i, j;
+	int i, j;
 
 	if (img->MatrizDesenho == NULL) {
 		printf("Nao existe uma informacao valida para ser salva no arquivo!\n");
@@ -158,4 +157,6 @@ void limpaDesenho (Imagem *img, Cor primitiva) {
 			img->MatrizDesenho[i][j].B = primitiva.B;
 		}
 	}
+
+	printf("Imagem resetada com sucesso!\n");
 }

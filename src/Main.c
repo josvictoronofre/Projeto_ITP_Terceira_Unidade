@@ -33,6 +33,11 @@ int main (void) {
 		else if (strcmp(controle, "rect") == 0) {
 			poligonoRetangulo(&desenho, primitiva);
 		}
+		else if (strcmp(controle, "line") == 0) {
+			desenhaReta(&desenho, primitiva);
+		} else {
+			printf("Comando nao existente, tente novamente.\n");
+		}
 	}
 
 return 0;
