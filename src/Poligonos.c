@@ -6,7 +6,7 @@ void poligonoRetangulo (Imagem *img, Cor primitiva) {
 
 	printf("Insira os valores x e y do retangulo:\n");
 
-	scanf("%d %d", &x, &y);
+	checaPonto(&x, &y, img->Ncolunas, img->Nlinhas);
 
 	printf("Insira a altura e largura do retangulo:\n");
 
