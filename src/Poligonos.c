@@ -2,7 +2,7 @@
 
 
 void poligonoRetangulo (Imagem *img, Cor primitiva) {
-	int x, y, i, j, altura, largura;
+	int x, y, i, j, altura, largura, pivoaltura, pivolargura;
 
 	printf("Insira os valores x e y do retangulo:\n");
 
@@ -10,9 +10,16 @@ void poligonoRetangulo (Imagem *img, Cor primitiva) {
 
 	printf("Insira a altura e largura do retangulo:\n");
 
-	scanf("%d %d", &altura, &largura);
+	scanf("%d %d", &pivoaltura, &pivolargura);
 
-	altura = y - altura;
+	if(x + largura > img->Ncolunas || y + altura > img->Nlinhas) {
+		printf("Altura e/ou largura invalidas. Tente novamente:\n");
+	} else {
+		altura = pivoaltura;
+		largura = pivolargura;
+	}
+
+	altura += y;
 	largura += x;
 
 	for (i = x; i < largura; i++) {
@@ -26,7 +33,7 @@ void poligonoRetangulo (Imagem *img, Cor primitiva) {
 
 	}
 
-	for (j = altura; j < y; j++) {
+	for (j = y; j < altura; j++) {
 		img->MatrizDesenho[j][x].R = primitiva.R;
 		img->MatrizDesenho[j][x].G = primitiva.G;
 		img->MatrizDesenho[j][x].B = primitiva.B;
