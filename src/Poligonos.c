@@ -45,25 +45,17 @@ void poligonoRetangulo (Imagem *img, Cor primitiva) {
 	}
 }
 
-void desenhaReta (Imagem *img, Cor primitiva) {
-	int x1, y1, x2, y2, i = 0, j = 0;
+void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
+	int i = 0, j = 0;
 	float anguloy, angulox, deslocacao = 0;
 
-	printf("Insira os valores x e y do ponto inicial:\n");
+	anguloy =(float) (final.y - origem.y) / (final.x - origem.x);
+	angulox =(float) (final.x - origem.x) / (final.y - origem.y);
 
-	checaPonto(&x1, &y1, img->Ncolunas, img->Nlinhas);
-
-	printf("Insira os valores x e y do ponto final:\n");
-
-	checaPonto(&x2, &y2, img->Ncolunas, img->Nlinhas);
-
-	anguloy =(float) (y2 - y1) / (x2 - x1);
-	angulox =(float) (x2 - x1) / (y2 - y1);
-
-	if (x2 >= x1 && y2 >= y1) {
+	if (final.x >= origem.x && final.y >= origem.y) {
 		if (anguloy < 1) {
-			j = y1;
-			for (i = x1; i <= x2; i++) {
+			j = origem.y;
+			for (i = origem.x; i <= final.x; i++) {
 				img->MatrizDesenho[j][i].R = primitiva.R;
 				img->MatrizDesenho[j][i].G = primitiva.G;
 				img->MatrizDesenho[j][i].B = primitiva.B;
@@ -76,8 +68,8 @@ void desenhaReta (Imagem *img, Cor primitiva) {
 				}
 			}
 		} else {
-			j = x1;
-			for (i = y1; i <= y2; i++) {
+			j = origem.x;
+			for (i = origem.y; i <= final.y; i++) {
 				img->MatrizDesenho[i][j].R = primitiva.R;
 				img->MatrizDesenho[i][j].G = primitiva.G;
 				img->MatrizDesenho[i][j].B = primitiva.B;
@@ -90,10 +82,10 @@ void desenhaReta (Imagem *img, Cor primitiva) {
 				}
 			}
 		}
-	} else if (x1 > x2 && y1 > y2) {
+	} else if (origem.x > final.x && origem.y > final.y) {
 		if (anguloy < 1) {
-			j = y1;
-			for (i = x2; i <= x1; i++) {
+			j = origem.y;
+			for (i = final.x; i <= origem.x; i++) {
 				img->MatrizDesenho[j][i].R = primitiva.R;
 				img->MatrizDesenho[j][i].G = primitiva.G;
 				img->MatrizDesenho[j][i].B = primitiva.B;
@@ -106,8 +98,8 @@ void desenhaReta (Imagem *img, Cor primitiva) {
 				}
 			}
 		} else {
-			j = x1;
-			for (i = y2; i <= y1; i++) {
+			j = origem.x;
+			for (i = final.y; i <= origem.y; i++) {
 				img->MatrizDesenho[i][j].R = primitiva.R;
 				img->MatrizDesenho[i][j].G = primitiva.G;
 				img->MatrizDesenho[i][j].B = primitiva.B;
@@ -120,9 +112,9 @@ void desenhaReta (Imagem *img, Cor primitiva) {
 				}
 			}
 		}
-	} else if (x2 >= x1 && y2 <= y1) {
+	} else if (final.x >= origem.x && final.y <= origem.y) {
 		if (anguloy > -1) {
-			j = y1;
+			j = origem.y;
 			for (i = x1; i <= x2; i++) {
 				img->MatrizDesenho[j][i].R = primitiva.R;
 				img->MatrizDesenho[j][i].G = primitiva.G;
@@ -136,7 +128,7 @@ void desenhaReta (Imagem *img, Cor primitiva) {
 				}
 			}
 		} else {
-			j = x1;
+			j = origem.x;
 			for (i = y2; i <= y1; i++) {
 				img->MatrizDesenho[i][j].R = primitiva.R;
 				img->MatrizDesenho[i][j].G = primitiva.G;
@@ -150,9 +142,9 @@ void desenhaReta (Imagem *img, Cor primitiva) {
 				}
 			}
 		}
-	} else if (x2 < x1 && y2 > y1) {
+	} else if (final.x < origem.x && final.y > origem.y) {
 		if (anguloy > -1) {
-			j = y1;
+			j = origem.y;
 			for (i = x1; i >= x2; i--) {
 				img->MatrizDesenho[j][i].R = primitiva.R;
 				img->MatrizDesenho[j][i].G = primitiva.G;
@@ -166,8 +158,8 @@ void desenhaReta (Imagem *img, Cor primitiva) {
 				}
 			}
 		} else {
-			j = x1;
-			for (i = y1; i <= y2; i++) {
+			j = origem.x;
+			for (i = origem.y; i <= final.y; i++) {
 				img->MatrizDesenho[i][j].R = primitiva.R;
 				img->MatrizDesenho[i][j].G = primitiva.G;
 				img->MatrizDesenho[i][j].B = primitiva.B;
@@ -208,4 +200,19 @@ void DesenhaCirculo (Imagem *img, Cor primitiva) {
 	scanf("%hu", &raio);
 
 	for (i = x; i < (x+raio); i++) {}
+}
+
+void desenhaPoligono (Imagem *img, Cor primitiva) {
+	int Npontos, i;
+	Ponto *Poligono;
+
+	printf("Quantos pontos tera o poligono?\n");
+
+	scanf("%d", &Npontos);
+
+	Poligono = (Ponto *) malloc(Npontos*sizeof(Pontos));
+
+	for (i = 0; i < Npontos; i++) {
+		desenhaReta(Poligono[i].x)
+	}
 }
