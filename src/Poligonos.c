@@ -2,30 +2,31 @@
 
 
 void poligonoRetangulo (Imagem *img, Cor primitiva) {
-	int x, y, i, j, altura, largura, pivoaltura, pivolargura;
+	int i, j, altura, largura, pivoaltura, pivolargura;
+	Ponto pivo;
 
 	printf("Insira os valores x e y do retangulo:\n");
 
-	checaPonto(&x, &y, img->Ncolunas, img->Nlinhas);
-
+	checaPonto(&pivo.x, &pivo.y, img->Ncolunas, img->Nlinhas);
+	
 	printf("Insira a altura e largura do retangulo:\n");
 
 	scanf("%d %d", &pivoaltura, &pivolargura);
 
-	if(x + largura > img->Ncolunas || y + altura > img->Nlinhas) {
+	if(pivo.x + pivolargura > img->Ncolunas || pivo.y + pivoaltura > img->Nlinhas) {
 		printf("Altura e/ou largura invalidas. Tente novamente:\n");
 	} else {
 		altura = pivoaltura;
 		largura = pivolargura;
 	}
 
-	altura += y;
-	largura += x;
+	altura += pivo.y;
+	largura += pivo.x;
 
-	for (i = x; i < largura; i++) {
-		img->MatrizDesenho[y][i].R = primitiva.R;
-		img->MatrizDesenho[y][i].G = primitiva.G;
-		img->MatrizDesenho[y][i].B = primitiva.B;
+	for (i = pivo.x; i < largura; i++) {
+		img->MatrizDesenho[pivo.y][i].R = primitiva.R;
+		img->MatrizDesenho[pivo.y][i].G = primitiva.G;
+		img->MatrizDesenho[pivo.y][i].B = primitiva.B;
 
 		img->MatrizDesenho[altura][i].R = primitiva.R;
 		img->MatrizDesenho[altura][i].G = primitiva.G;
@@ -33,10 +34,10 @@ void poligonoRetangulo (Imagem *img, Cor primitiva) {
 
 	}
 
-	for (j = y; j < altura; j++) {
-		img->MatrizDesenho[j][x].R = primitiva.R;
-		img->MatrizDesenho[j][x].G = primitiva.G;
-		img->MatrizDesenho[j][x].B = primitiva.B;
+	for (j = pivo.y; j < altura; j++) {
+		img->MatrizDesenho[j][pivo.x].R = primitiva.R;
+		img->MatrizDesenho[j][pivo.x].G = primitiva.G;
+		img->MatrizDesenho[j][pivo.x].B = primitiva.B;
 
 		img->MatrizDesenho[j][largura].R = primitiva.R;
 		img->MatrizDesenho[j][largura].G = primitiva.G;
@@ -183,7 +184,7 @@ void desenhaReta (Imagem *img, Cor primitiva) {
 }
 
 void checaPonto (int *x, int *y, const int xmax, const int ymax) {
-	while (1 == 1) {
+	while (1) {
 		scanf("%d %d", x, y);
 		if (*x > xmax || *x < 0 || *y > ymax || y < 0) {
 			printf("valores das cordenadas do ponto invalidos!\n");
@@ -192,4 +193,18 @@ void checaPonto (int *x, int *y, const int xmax, const int ymax) {
 			return;
 
 	}
+}
+
+void DesenhaCirculo (Imagem *img, Cor primitiva) {
+	unsigned short int x, y, i, raio;
+
+	printf("Insira as coordenadas do centro do circulo:\n");
+
+	scanf("%hu %hu", &x, &y);
+
+	printf("Insira o raio do circulo:\n");
+
+	scanf("%hu", &raio);
+
+	for (i = x; i < (x+raio); i++) {}
 }
