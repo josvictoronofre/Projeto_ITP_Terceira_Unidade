@@ -8,7 +8,7 @@ void poligonoRetangulo (Imagem *img, Cor primitiva) {
 	printf("Insira os valores x e y do retangulo:\n");
 
 	checaPonto(&pivo.x, &pivo.y, img->Ncolunas, img->Nlinhas);
-	
+
 	printf("Insira a altura e largura do retangulo:\n");
 
 	scanf("%d %d", &pivoaltura, &pivolargura);
@@ -183,9 +183,10 @@ void desenhaReta (Imagem *img, Cor primitiva) {
 	}
 }
 
-void checaPonto (int *x, int *y, const int xmax, const int ymax) {
+void checaPonto (int *x, int *y, int xmax, int ymax) {
+	xmax--;
+	ymax--;
 	while (1) {
-		scanf("%d %d", x, y);
 		if (*x > xmax || *x < 0 || *y > ymax || y < 0) {
 			printf("valores das cordenadas do ponto invalidos!\n");
 			printf("Insira os valores novamente:\n");

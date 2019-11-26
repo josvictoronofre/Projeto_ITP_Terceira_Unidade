@@ -7,7 +7,7 @@ void poligonoRetangulo (Imagem *img, Cor primitiva);
 
 void desenhaReta (Imagem *img, Cor primitiva);
 
-void checaPonto (int *x, int *y, const int xmax, const int ymax);
+void checaPonto (int *x, int *y, int xmax, int ymax);
 
 void DesenhaCirculo (Imagem *img, Cor primitiva);
 
