@@ -115,7 +115,7 @@ void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
 	} else if (final.x >= origem.x && final.y <= origem.y) {
 		if (anguloy > -1) {
 			j = origem.y;
-			for (i = x1; i <= x2; i++) {
+			for (i = origem.x; i <= final.x; i++) {
 				img->MatrizDesenho[j][i].R = primitiva.R;
 				img->MatrizDesenho[j][i].G = primitiva.G;
 				img->MatrizDesenho[j][i].B = primitiva.B;
@@ -129,7 +129,7 @@ void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
 			}
 		} else {
 			j = origem.x;
-			for (i = y2; i <= y1; i++) {
+			for (i = final.y; i <= origem.y; i++) {
 				img->MatrizDesenho[i][j].R = primitiva.R;
 				img->MatrizDesenho[i][j].G = primitiva.G;
 				img->MatrizDesenho[i][j].B = primitiva.B;
@@ -145,7 +145,7 @@ void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
 	} else if (final.x < origem.x && final.y > origem.y) {
 		if (anguloy > -1) {
 			j = origem.y;
-			for (i = x1; i >= x2; i--) {
+			for (i = origem.x; i >= final.x; i--) {
 				img->MatrizDesenho[j][i].R = primitiva.R;
 				img->MatrizDesenho[j][i].G = primitiva.G;
 				img->MatrizDesenho[j][i].B = primitiva.B;
@@ -204,15 +204,27 @@ void DesenhaCirculo (Imagem *img, Cor primitiva) {
 
 void desenhaPoligono (Imagem *img, Cor primitiva) {
 	int Npontos, i;
-	Ponto *Poligono;
+	Ponto *poligono;
 
 	printf("Quantos pontos tera o poligono?\n");
 
 	scanf("%d", &Npontos);
 
-	Poligono = (Ponto *) malloc(Npontos*sizeof(Pontos));
+	poligono = (Ponto *) malloc(Npontos*sizeof(Ponto));
 
 	for (i = 0; i < Npontos; i++) {
-		desenhaReta(Poligono[i].x)
+		printf("Insira as coordenadas do ponto %d:\n", (i+1));
+
+		scanf("%d %d", &poligono[i].x, &poligono[i].y);
+	}
+
+	for (i = 0; i < Npontos; i++) {
+		if (i == (Npontos - 1)) {
+			desenhaReta(img, poligono[i], poligono[0], primitiva);
+		} else {
+		
+			desenhaReta(img, poligono[i], poligono[i+1], primitiva);
+		
+		}
 	}
 }
