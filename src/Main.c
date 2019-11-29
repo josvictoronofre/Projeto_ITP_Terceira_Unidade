@@ -35,7 +35,8 @@ int main (void) {
 		}
 		else if (strcmp(controle, "polygon") == 0) {
 			desenhaPoligono(&desenho, primitiva);
-		} else {
+		}
+		else {
 			printf("Comando nao existente, tente novamente.\n");
 		}
 	}

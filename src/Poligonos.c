@@ -13,12 +13,19 @@ void poligonoRetangulo (Imagem *img, Cor primitiva) {
 
 	scanf("%d %d", &pivoaltura, &pivolargura);
 
-	if(pivo.x + pivolargura > img->Ncolunas || pivo.y + pivoaltura > img->Nlinhas) {
-		printf("Altura e/ou largura invalidas. Tente novamente:\n");
-	} else {
-		altura = pivoaltura;
-		largura = pivolargura;
+	while (1) {
+		if ((pivo.x + pivolargura) >= img->Ncolunas || (pivo.y + pivoaltura) >= img->Nlinhas) {
+			printf("Valores de altura e/ou largura invalidos. Insira novos valores:\n");
+
+			scanf("%d %d", &pivoaltura, &pivolargura);
+		} else {
+			altura = pivoaltura;
+			largura = pivolargura;
+			break;
+		}
 	}
+	
+
 
 	altura += pivo.y;
 	largura += pivo.x;
@@ -45,7 +52,7 @@ void poligonoRetangulo (Imagem *img, Cor primitiva) {
 	}
 }
 
-void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
+void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva, Ponto *vetor, int *contador, int *controle) {
 	int i = 0, j = 0;
 	float anguloy, angulox, deslocacao = 0;
 
@@ -60,6 +67,9 @@ void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
 				img->MatrizDesenho[j][i].G = primitiva.G;
 				img->MatrizDesenho[j][i].B = primitiva.B;
 
+				salvaPonto(vetor, i, j, contador, controle);
+
+
 				deslocacao += anguloy;
 
 				while (deslocacao >= 1) {
@@ -73,6 +83,8 @@ void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
 				img->MatrizDesenho[i][j].R = primitiva.R;
 				img->MatrizDesenho[i][j].G = primitiva.G;
 				img->MatrizDesenho[i][j].B = primitiva.B;
+
+				salvaPonto(vetor, j, i, contador, controle);
 
 				deslocacao += angulox;
 
@@ -85,30 +97,34 @@ void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
 	} else if (origem.x > final.x && origem.y > final.y) {
 		if (anguloy < 1) {
 			j = origem.y;
-			for (i = final.x; i <= origem.x; i++) {
+			for (i = origem.x; i >= final.x; i--) {
 				img->MatrizDesenho[j][i].R = primitiva.R;
 				img->MatrizDesenho[j][i].G = primitiva.G;
 				img->MatrizDesenho[j][i].B = primitiva.B;
+
+				salvaPonto(vetor, i, j, contador, controle);
 
 				deslocacao += anguloy;
 
 				while (deslocacao >= 1) {
 					deslocacao = deslocacao - 1;
-					j++;
+					j--;
 				}
 			}
 		} else {
 			j = origem.x;
-			for (i = final.y; i <= origem.y; i++) {
+			for (i = origem.y; i >= final.y; i--) {
 				img->MatrizDesenho[i][j].R = primitiva.R;
 				img->MatrizDesenho[i][j].G = primitiva.G;
 				img->MatrizDesenho[i][j].B = primitiva.B;
+
+				salvaPonto(vetor, j, i, contador, controle);
 
 				deslocacao += angulox;
 
 				while (deslocacao >= 1) {
 					deslocacao = deslocacao - 1;
-					j++;
+					j--;
 				}
 			}
 		}
@@ -120,6 +136,8 @@ void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
 				img->MatrizDesenho[j][i].G = primitiva.G;
 				img->MatrizDesenho[j][i].B = primitiva.B;
 
+				salvaPonto(vetor, i, j, contador, controle);
+
 				deslocacao += anguloy;
 
 				while (deslocacao <= -1) {
@@ -134,6 +152,8 @@ void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
 				img->MatrizDesenho[i][j].G = primitiva.G;
 				img->MatrizDesenho[i][j].B = primitiva.B;
 
+				salvaPonto(vetor, j, i, contador, controle);
+
 				deslocacao += angulox;
 
 				while (deslocacao <= -1) {
@@ -142,13 +162,15 @@ void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
 				}
 			}
 		}
-	} else if (final.x < origem.x && final.y > origem.y) {
+	} else if (final.x <= origem.x && final.y >= origem.y) {
 		if (anguloy > -1) {
 			j = origem.y;
 			for (i = origem.x; i >= final.x; i--) {
 				img->MatrizDesenho[j][i].R = primitiva.R;
 				img->MatrizDesenho[j][i].G = primitiva.G;
 				img->MatrizDesenho[j][i].B = primitiva.B;
+
+				salvaPonto(vetor, i, j, contador, controle);
 
 				deslocacao += anguloy;
 
@@ -163,6 +185,8 @@ void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva) {
 				img->MatrizDesenho[i][j].R = primitiva.R;
 				img->MatrizDesenho[i][j].G = primitiva.G;
 				img->MatrizDesenho[i][j].B = primitiva.B;
+
+				salvaPonto(vetor, j, i, contador, controle);
 
 				deslocacao += angulox;
 
@@ -203,28 +227,60 @@ void DesenhaCirculo (Imagem *img, Cor primitiva) {
 }
 
 void desenhaPoligono (Imagem *img, Cor primitiva) {
-	int Npontos, i;
+	int Npontos, i, contador, controle = 0;
 	Ponto *poligono;
+	Ponto *vetor;
+	Imagem pivo;
+
+	pivo.Nlinhas = img->Nlinhas;
+	pivo.Ncolunas = img->Ncolunas;
+	pivo.tipoImagem[0] = 'P';
+	pivo.tipoImagem[1] = '3';
+	pivo.Maximopixels = img->Maximopixels;
+
+	vetor = (Ponto *) malloc(1*sizeof(Ponto));
 
 	printf("Quantos pontos tera o poligono?\n");
 
 	scanf("%d", &Npontos);
 
+	Npontos++;
+
 	poligono = (Ponto *) malloc(Npontos*sizeof(Ponto));
 
-	for (i = 0; i < Npontos; i++) {
+	for (i = 0; i < (Npontos - 1); i++) {
 		printf("Insira as coordenadas do ponto %d:\n", (i+1));
 
 		scanf("%d %d", &poligono[i].x, &poligono[i].y);
 	}
 
-	for (i = 0; i < Npontos; i++) {
-		if (i == (Npontos - 1)) {
-			desenhaReta(img, poligono[i], poligono[0], primitiva);
-		} else {
-		
-			desenhaReta(img, poligono[i], poligono[i+1], primitiva);
-		
+	poligono[Npontos - 1] = poligono[0];
+
+	alocaMemoria(&pivo);
+
+	for (i = 0; i < (Npontos - 1); i++) {
+		desenhaReta(&pivo, poligono[i], poligono[i+1], primitiva, vetor, &contador, &controle);
+	}
+
+	if (controle > 0) {
+		printf("Valores das coordenadas do Poligono invalidos!\n");
+	} else {
+		passaDesenho(img, pivo);
+	}
+}
+
+void salvaPonto(Ponto *vetor, const int coordenadax, const int coordenaday, int *contador, int *controle) {
+	unsigned short int i;
+
+	vetor = (Ponto *) realloc(vetor, *contador*sizeof(Ponto));
+	vetor[*contador].x = coordenadax;
+	vetor[*contador].y = coordenaday;
+
+	for (i = 0; i< *contador; i++) {
+		if(vetor[i].x == coordenadax && vetor[i].y == coordenaday) {
+			controle++;
 		}
 	}
+
+	*contador++;
 }

@@ -20,4 +20,6 @@ void escolheCor (Cor *primitiva);
 
 void limpaDesenho (Imagem *img, Cor primitiva);
 
+void passaDesenho(Imagem *img, Imagem pivo);
+
 #endif
