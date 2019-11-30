@@ -258,21 +258,25 @@ void desenhaPoligono (Imagem *img, Cor primitiva) {
 
 	alocaMemoria(&pivo);
 
+	printf("Chegou aqui!\n");
+
 	for (i = 0; i < (Npontos - 1); i++) {
 		desenhaReta(&pivo, poligono[i], poligono[i+1], primitiva, vetor, &contador, &controle);
+		printf("Chegou aqui!\n");
 	}
 
 	if (controle > 0) {
 		printf("Valores das coordenadas do Poligono invalidos!\n");
+		printf("Chegou aqui!\n");
 	} else {
-		passaDesenho(img, pivo);
+		passaDesenho(img, &pivo);
 	}
 }
 
 void salvaPonto(Ponto *vetor, const int coordenadax, const int coordenaday, int *contador, int *controle) {
 	unsigned short int i;
 
-	vetor = (Ponto *) realloc(vetor, *contador*sizeof(Ponto));
+	vetor = (Ponto *) realloc(vetor, (*contador)*sizeof(Ponto));
 	vetor[*contador].x = coordenadax;
 	vetor[*contador].y = coordenaday;
 
@@ -282,5 +286,5 @@ void salvaPonto(Ponto *vetor, const int coordenadax, const int coordenaday, int 
 		}
 	}
 
-	*contador++;
+	*contador += 1;
 }

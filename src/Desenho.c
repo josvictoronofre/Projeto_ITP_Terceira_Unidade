@@ -159,15 +159,15 @@ void limpaDesenho (Imagem *img, Cor primitiva) {
 	printf("Imagem resetada com sucesso!\n");
 }
 
-void passaDesenho(Imagem *img, Imagem pivo) {
+void passaDesenho(Imagem *img, Imagem *pivo) {
 	unsigned short int i, j;
 
-	for (i = 0; i < img->Nlinhas; i++) {
-		for (j = 0; j < img->Ncolunas; j++) {
-			img->MatrizDesenho[i][j].R = pivo.MatrizDesenho[i][j].R;
-			img->MatrizDesenho[i][j].G = pivo.MatrizDesenho[i][j].G;
-			img->MatrizDesenho[i][j].B = pivo.MatrizDesenho[i][j].B;
+	for (i = 0; i < pivo->Nlinhas; i++) {
+		for (j = 0; j < pivo->Ncolunas; j++) {
+			img->MatrizDesenho[i][j].R = pivo->MatrizDesenho[i][j].R;
+			img->MatrizDesenho[i][j].G = pivo->MatrizDesenho[i][j].G;
+			img->MatrizDesenho[i][j].B = pivo->MatrizDesenho[i][j].B;
 		}
-		liberaMemoria(&pivo);
+		
 	}
 }
