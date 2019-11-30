@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 void criaDesenho (Imagem *img, Cor primitiva);
 
@@ -20,6 +21,6 @@ void escolheCor (Cor *primitiva);
 
 void limpaDesenho (Imagem *img, Cor primitiva);
 
-void passaDesenho(Imagem *img, Imagem *spivo);
+void passaDesenho(Imagem *img, Imagem *pivo);
 
 #endif

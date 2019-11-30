@@ -5,7 +5,7 @@
 
 void poligonoRetangulo (Imagem *img, Cor primitiva);
 
-void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva, Ponto *vetor, int *contador, int *controle);
+void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva, Ponto *vetor, int *contador);
 
 void checaPonto (int *x, int *y, int xmax, int ymax);
 
@@ -13,6 +13,8 @@ void DesenhaCirculo (Imagem *img, Cor primitiva);
 
 void desenhaPoligono (Imagem *img, Cor primitiva);
 
-void salvaPonto(Ponto *vetor, const int coordenadax, const int coordenaday, int *contador, int *controle);
+void salvaPonto(Ponto *vetor, const int coordenadax, const int coordenaday, int *contador);
+
+bool checaVetor (Ponto *vetor, int contador);
 
 #endif
