@@ -7,6 +7,8 @@ void poligonoRetangulo (Imagem *img, Cor primitiva) {
 
 	printf("Insira os valores x e y do retangulo:\n");
 
+	scanf("%d %d", &pivo.x, &pivo.y);
+
 	checaPonto(&pivo.x, &pivo.y, img->Ncolunas, img->Nlinhas);
 
 	printf("Insira a altura e largura do retangulo:\n");
@@ -206,6 +208,7 @@ void checaPonto (int *x, int *y, int xmax, int ymax) {
 		if (*x > xmax || *x < 0 || *y > ymax || y < 0) {
 			printf("valores das cordenadas do ponto invalidos!\n");
 			printf("Insira os valores novamente:\n");
+			scanf("%d %d", x, y);
 		} else
 			return;
 
@@ -265,6 +268,10 @@ void desenhaPoligono (Imagem *img, Cor primitiva) {
 		}
 	}
 
+	for (i = 0; i < contador; i++) {
+		printf("%d %d\n", vetor[i].x, vetor[i].y);
+	}
+
 	if (checaVetor(vetor, contador)) {
 		printf("Valores de poligono invalidos!\n");
 		return;
@@ -280,10 +287,12 @@ void salvaPonto(Ponto *vetor, const int coordenadax, const int coordenaday, int 
 	vetor = (Ponto *) realloc(vetor, (*contador)*sizeof(Ponto));
 	vetor[(*contador) - 1].x = coordenadax;
 	vetor[(*contador) - 1].y = coordenaday;
+
+	*contador += 1;
 }
 
 bool checaVetor (Ponto *vetor, int contador) {
-	unsigned short int i, j;
+	unsigned long int i, j;
 	for (i = 0; i < (contador - 1); i++) {
 		for (j = 0; j< (contador - 1); j++) {
 			if (vetor[i].x == vetor[j].x && vetor[i].y == vetor[j].y) {
