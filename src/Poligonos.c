@@ -241,8 +241,6 @@ void desenhaPoligono (Imagem *img, Cor primitiva) {
 	pivo.tipoImagem[2] = '\0';
 	pivo.Maximopixels = img->Maximopixels;
 
-	printf("%d %d %s %d\n", pivo.Nlinhas, pivo.Ncolunas, pivo.tipoImagem, pivo.Maximopixels);
-
 	printf("Quantos pontos tera o poligono?\n");
 
 	scanf("%d", &Npontos);
@@ -256,6 +254,8 @@ void desenhaPoligono (Imagem *img, Cor primitiva) {
 	}
 
 	alocaMemoria(&pivo);
+
+	passaDesenho(&pivo, img);
 
 	for (i = 0; i < Npontos; i++) {
 		if (i == (Npontos - 1)) {

@@ -46,6 +46,7 @@ void leDesenho (Imagem *img) {
 
 	if (desenho == NULL) {
 		printf("Nao foi possivel ler o arquivo!\n");
+		return;
 	} else
 		printf("Imagem carregada com sucesso!\n");
 
