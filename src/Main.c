@@ -6,6 +6,8 @@ int main (void) {
 	Imagem desenho;
 	Cor primitiva = {255,255,255};
 	
+	system("clear");
+
 	while (ativador == 0) {
 
 		printf("O que deseja fazer?\n");
@@ -36,8 +38,11 @@ int main (void) {
 		else if (strcmp(controle, "polygon") == 0) {
 			desenhaPoligono(&desenho, primitiva);
 		}
+		else if (controle[0] == '?') {
+			printaOpcoes();
+		}
 		else {
-			printf("Comando nao existente, tente novamente.\n");
+			printf("Comando nao existente, para ver a lista de comandos aperte '?'\n");
 		}
 	}
 

@@ -23,4 +23,6 @@ void limpaDesenho (Imagem *img, Cor primitiva);
 
 void passaDesenho(Imagem *img, Imagem *pivo);
 
+void printaOpcoes ();
+
 #endif
