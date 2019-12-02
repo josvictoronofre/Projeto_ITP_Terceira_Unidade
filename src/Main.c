@@ -1,10 +1,11 @@
 #include "Poligonos.h"
 
 int main (void) {
-	char controle[50];
+	char controle[30];
 	unsigned short ativador = 0;
 	Imagem desenho;
 	Cor primitiva = {255,255,255};
+	Ponto posicao;
 	
 	system("clear");
 

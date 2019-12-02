@@ -17,4 +17,8 @@ void salvaPonto(Ponto *vetor, const int coordenadax, const int coordenaday, int 
 
 bool checaVetor (Ponto *vetor, int contador);
 
+void pintaDesenho (Imagem *img, Cor primitiva, Ponto posicao, int *cima, int *baixo, int *direita, int *esquerda);
+
+void funcaoPintar (Imagem *img, Cor primitiva);
+
 #endif

@@ -216,26 +216,39 @@ void checaPonto (int *x, int *y, int xmax, int ymax) {
 }
 
 void DesenhaCirculo (Imagem *img, Cor primitiva) {
-	unsigned short int x, y, i, raio;
+	unsigned short int x, y, i, j, raio;
+	Imagem pivo;
+	pivo.Nlinhas = img->Nlinhas;
+	pivo.Ncolunas = img->Ncolunas;
+
+	alocaMemoria(&pivo);
+
+	passaDesenho(&pivo, img);
 
 	printf("Insira as coordenadas do centro do circulo:\n");
 
 	scanf("%hu %hu", &x, &y);
 
+	checaPonto(&x, &y, img->Ncolunas, img->Nlinhas);
+
 	printf("Insira o raio do circulo:\n");
 
 	scanf("%hu", &raio);
 
-	for (i = x; i < (x+raio); i++) {}
+	for (i = 0; i < raio; i++) {
+		if ((i % 2) == 0) {
+			pivo.MatrizDesenho[y+raio][x+(i/2)].R = primitiva.R;
+		}
+	}
 }
 
 void desenhaPoligono (Imagem *img, Cor primitiva) {
-	int Npontos, i, contador = 1;
+	int Npontos, i, contador = 0;
 	Ponto *poligono;
 	Ponto *vetor;
 	Imagem pivo;
 
-	vetor = (Ponto *) malloc(2*sizeof(Ponto));
+	vetor = (Ponto *) calloc(2240, sizeof(Ponto));
 
 	pivo.Nlinhas = img->Nlinhas;
 	pivo.Ncolunas = img->Ncolunas;
@@ -260,6 +273,8 @@ void desenhaPoligono (Imagem *img, Cor primitiva) {
 
 	passaDesenho(&pivo, img);
 
+	contador = 1;
+
 	for (i = 0; i < Npontos; i++) {
 		if (i == (Npontos - 1)) {
 			desenhaReta(&pivo, poligono[i], poligono[0], primitiva, vetor, &contador);
@@ -268,37 +283,82 @@ void desenhaPoligono (Imagem *img, Cor primitiva) {
 		}
 	}
 
-	for (i = 0; i < contador; i++) {
-		printf("%d %d\n", vetor[i].x, vetor[i].y);
-	}
-
 	if (checaVetor(vetor, contador)) {
 		printf("Valores de poligono invalidos!\n");
 		return;
 	} else {
 		passaDesenho(img, &pivo);
 	}
+	liberaMemoria(&pivo);
+	free(vetor);
 	
 }
 	
 
 void salvaPonto(Ponto *vetor, const int coordenadax, const int coordenaday, int *contador) {
+	*contador = (*contador) + 1;
 
-	vetor = (Ponto *) realloc(vetor, (*contador)*sizeof(Ponto));
 	vetor[(*contador) - 1].x = coordenadax;
 	vetor[(*contador) - 1].y = coordenaday;
-
-	*contador += 1;
 }
 
 bool checaVetor (Ponto *vetor, int contador) {
 	unsigned long int i, j;
 	for (i = 0; i < (contador - 1); i++) {
 		for (j = 0; j< (contador - 1); j++) {
-			if (vetor[i].x == vetor[j].x && vetor[i].y == vetor[j].y) {
-				return true;
+			if (i == j) {
+				continue;
+			} else {
+				if (vetor[i].x == vetor[j].x && vetor[i].y == vetor[j].y) {
+					return true;
+				}
 			}
 		}
 	}
 	return false;
+}
+
+void pintaVertical (Imagem *img, Cor primitiva, int x, int y) {
+
+	unsigned short int cima, direita, esquerda, baixo;
+
+	cima = y;
+	baixo = y;
+
+	direita = x;
+	esquerda = y;
+
+	while (cima < img->Nlinhas) {
+
+		img->MatrizDesenho[cima][x].R = primitiva.R;
+		img->MatrizDesenho[cima][x].G = primitiva.G;
+		img->MatrizDesenho[cima][x].B = primitiva.B;
+		cima++;
+		pintaVertical(img, inicial, x, cima);
+	}
+	while (direita < img->Ncolunas) {
+		img->MatrizDesenho[posicao.y][direita].R = primitiva.R;
+		img->MatrizDesenho[posicao.y][direita].G = primitiva.G;
+		img->MatrizDesenho[posicao.y][direita].B = primitiva.B;
+		direita++;
+		pintaVertical(img, inicial, direita, y);
+	}
+
+}
+
+void funcaoPintar (Imagem *img, Cor primitiva) {
+	Ponto posicao;
+	Cor inicial;
+	unsigned short int cima, baixo, direita, esquerda;
+
+	printf("Insira os valores x e y do ponto inicial:\n");
+
+	scanf("%d %d", &posicao.x, &posicao.y);
+
+	inicial.R = img->MatrizDesenho[posicao.y][posicao.x].R;
+	inicial.G = img->MatrizDesenho[posicao.y][posicao.x].G;
+	inicial.B = img->MatrizDesenho[posicao.y][posicao.x].B;
+
+
+
 }
