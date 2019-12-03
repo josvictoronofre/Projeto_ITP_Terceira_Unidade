@@ -1,4 +1,4 @@
-#include "Poligonos.h"
+#include "Utilidade.h"
 
 int main (void) {
 	char controle[30];
@@ -21,10 +21,15 @@ int main (void) {
 			escolheCor(&primitiva);
 		} 
 		else if (strcmp(controle, "clear") == 0) {
-			limpaDesenho(&desenho, primitiva);
+			if (checaCondicoes(&desenho)) {
+				limpaDesenho(&desenho, primitiva);
+			}
+			
 		}
 		else if (strcmp(controle, "open") == 0) {
-			leDesenho(&desenho);
+			if (checaCondicoes(&desenho)) {
+				leDesenho(&desenho);
+			}
 		}
 		else if (strcmp(controle, "save") == 0) {
 			salvaDesenho(&desenho);
@@ -33,10 +38,14 @@ int main (void) {
 			ativador++;
 		}
 		else if (strcmp(controle, "rect") == 0) {
-			poligonoRetangulo(&desenho, primitiva);
+			if (checaCondicoes(&desenho)) {
+				poligonoRetangulo(&desenho, primitiva);
+			}
 		}
 		else if (strcmp(controle, "polygon") == 0) {
-			desenhaPoligono(&desenho, primitiva);
+			if (checaCondicoes(&desenho)) {
+				desenhaPoligono(&desenho, primitiva);
+			}
 		}
 		else if (strcmp(controle, "fill") == 0) {
 			funcaoPintar(&desenho, primitiva);
