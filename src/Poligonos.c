@@ -337,9 +337,9 @@ void pintaDesenho (Imagem *img, Cor primitiva, int x, int y) {
 		baixo++;
 		if (baixo < img->Nlinhas) {
 
-			img->MatrizDesenho[cima][x].R = primitiva.R;
-			img->MatrizDesenho[cima][x].G = primitiva.G;
-			img->MatrizDesenho[cima][x].B = primitiva.B;
+			img->MatrizDesenho[baixo][x].R = primitiva.R;
+			img->MatrizDesenho[baixo][x].G = primitiva.G;
+			img->MatrizDesenho[baixo][x].B = primitiva.B;
 		
 			pintaDesenho(img, primitiva, x, cima);
 		}
@@ -370,9 +370,9 @@ void pintaDesenho (Imagem *img, Cor primitiva, int x, int y) {
 
 		if (cima >= 0) {
 
-			img->MatrizDesenho[baixo][x].R = primitiva.R;
-			img->MatrizDesenho[baixo][x].G = primitiva.G;
-			img->MatrizDesenho[baixo][x].B = primitiva.B;
+			img->MatrizDesenho[cima][x].R = primitiva.R;
+			img->MatrizDesenho[cima][x].G = primitiva.G;
+			img->MatrizDesenho[cima][x].B = primitiva.B;
 	
 			pintaDesenho(img, primitiva, x, baixo);
 		}
