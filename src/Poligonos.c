@@ -261,36 +261,42 @@ void desenhaPoligono (Imagem *img, Cor primitiva) {
 
 	scanf("%d", &Npontos);
 
-	poligono = (Ponto *) malloc(Npontos*sizeof(Ponto));
-
-	for (i = 0; i < Npontos; i++) {
-		printf("Insira as coordenadas do ponto %d:\n", (i+1));
-
-		scanf("%d %d", &poligono[i].x, &poligono[i].y);
-	}
-
-	alocaMemoria(&pivo);
-
-	passaDesenho(&pivo, img);
-
-	contador = 1;
-
-	for (i = 0; i < Npontos; i++) {
-		if (i == (Npontos - 1)) {
-			desenhaReta(&pivo, poligono[i], poligono[0], primitiva, vetor, &contador);
-		} else {
-			desenhaReta(&pivo, poligono[i], poligono[i+1], primitiva, vetor, &contador);
-		}
-	}
-
-	if (checaVetor(vetor, contador)) {
-		printf("Valores de poligono invalidos!\n");
+	if (Npontos <= 2) {
+		printf("Poligono precisa ter mais de 2 pontos\n");
 		return;
 	} else {
-		passaDesenho(img, &pivo);
+
+		poligono = (Ponto *) malloc(Npontos*sizeof(Ponto));
+
+		for (i = 0; i < Npontos; i++) {
+			printf("Insira as coordenadas do ponto %d:\n", (i+1));
+
+			scanf("%d %d", &poligono[i].x, &poligono[i].y);
+		}
+
+		alocaMemoria(&pivo);
+
+		passaDesenho(&pivo, img);
+
+		contador = 1;
+
+		for (i = 0; i < Npontos; i++) {
+			if (i == (Npontos - 1)) {
+				desenhaReta(&pivo, poligono[i], poligono[0], primitiva, vetor, &contador);
+			} else {
+				desenhaReta(&pivo, poligono[i], poligono[i+1], primitiva, vetor, &contador);
+			}
+		}
+
+		if (checaVetor(vetor, contador)) {
+			printf("Valores de poligono invalidos!\n");
+			return;
+		} else {
+			passaDesenho(img, &pivo);
+		}
+		liberaMemoria(&pivo);
+		free(vetor);
 	}
-	liberaMemoria(&pivo);
-	free(vetor);
 	
 }
 	
@@ -318,7 +324,7 @@ bool checaVetor (Ponto *vetor, int contador) {
 	return false;
 }
 
-void pintaDesenho (Imagem *img, Cor primitiva, Cor inicial, int x, int y) {
+void pintaDesenho (Imagem *img, Cor primitiva, int x, int y) {
 
 	short int cima, direita, esquerda, baixo;
 
@@ -382,16 +388,16 @@ void funcaoPintar (Imagem *img, Cor primitiva) {
 	scanf("%d %d", &posicao.x, &posicao.y);
 
 	checaPonto(&posicao.x, &posicao.y, img->Ncolunas, img->Nlinhas);
-
+	/*
 	inicial.R = img->MatrizDesenho[posicao.y][posicao.x].R;
 	inicial.G = img->MatrizDesenho[posicao.y][posicao.x].G;
 	inicial.B = img->MatrizDesenho[posicao.y][posicao.x].B;
-
+	*/
 	img->MatrizDesenho[posicao.y][posicao.x].R = primitiva.R;
 	img->MatrizDesenho[posicao.y][posicao.x].G = primitiva.G;
 	img->MatrizDesenho[posicao.y][posicao.x].B = primitiva.B;
 
-	pintaDesenho(img, primitiva, inicial, posicao.x, posicao.y);
+	pintaDesenho(img, primitiva, posicao.x, posicao.y);
 
 
 
