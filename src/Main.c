@@ -5,7 +5,6 @@ int main (void) {
 	unsigned short ativador = 0;
 	Imagem desenho;
 	Cor primitiva = {255,255,255};
-	Ponto posicao;
 	
 	system("clear");
 
@@ -38,6 +37,9 @@ int main (void) {
 		}
 		else if (strcmp(controle, "polygon") == 0) {
 			desenhaPoligono(&desenho, primitiva);
+		}
+		else if (strcmp(controle, "fill") == 0) {
+			funcaoPintar(&desenho, primitiva);
 		}
 		else if (controle[0] == '?') {
 			printaOpcoes();

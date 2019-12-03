@@ -214,7 +214,7 @@ void checaPonto (int *x, int *y, int xmax, int ymax) {
 
 	}
 }
-
+/*
 void DesenhaCirculo (Imagem *img, Cor primitiva) {
 	unsigned short int x, y, i, j, raio;
 	Imagem pivo;
@@ -241,7 +241,7 @@ void DesenhaCirculo (Imagem *img, Cor primitiva) {
 		}
 	}
 }
-
+*/
 void desenhaPoligono (Imagem *img, Cor primitiva) {
 	int Npontos, i, contador = 0;
 	Ponto *poligono;
@@ -318,46 +318,78 @@ bool checaVetor (Ponto *vetor, int contador) {
 	return false;
 }
 
-void pintaVertical (Imagem *img, Cor primitiva, int x, int y) {
+void pintaDesenho (Imagem *img, Cor primitiva, int x, int y) {
 
-	unsigned short int cima, direita, esquerda, baixo;
+	short int cima, direita, esquerda, baixo;
 
 	cima = y;
 	baixo = y;
 
 	direita = x;
-	esquerda = y;
-
-	while (cima < img->Nlinhas) {
-
-		img->MatrizDesenho[cima][x].R = primitiva.R;
-		img->MatrizDesenho[cima][x].G = primitiva.G;
-		img->MatrizDesenho[cima][x].B = primitiva.B;
+	esquerda = x;
+		
 		cima++;
-		pintaVertical(img, inicial, x, cima);
-	}
-	while (direita < img->Ncolunas) {
-		img->MatrizDesenho[posicao.y][direita].R = primitiva.R;
-		img->MatrizDesenho[posicao.y][direita].G = primitiva.G;
-		img->MatrizDesenho[posicao.y][direita].B = primitiva.B;
+		if (cima < img->Nlinhas) {
+
+			img->MatrizDesenho[cima][x].R = primitiva.R;
+			img->MatrizDesenho[cima][x].G = primitiva.G;
+			img->MatrizDesenho[cima][x].B = primitiva.B;
+		
+			pintaDesenho(img, primitiva, x, cima);
+		}
+
 		direita++;
-		pintaVertical(img, inicial, direita, y);
-	}
+
+		if (direita < img->Ncolunas) {
+
+			img->MatrizDesenho[y][direita].R = primitiva.R;
+			img->MatrizDesenho[y][direita].G = primitiva.G;
+			img->MatrizDesenho[y][direita].B = primitiva.B;
+
+			pintaDesenho(img, primitiva, direita, y);
+		}
+
+		esquerda--;
+
+		if (esquerda >= 0) {
+
+			img->MatrizDesenho[y][esquerda].R = primitiva.R;
+			img->MatrizDesenho[y][esquerda].G = primitiva.G;
+			img->MatrizDesenho[y][esquerda].B = primitiva.B;
+
+			pintaDesenho(img, primitiva, esquerda, y);
+		}
+
+		baixo--;
+
+		if (baixo >= 0) {
+
+			img->MatrizDesenho[baixo][x].R = primitiva.R;
+			img->MatrizDesenho[baixo][x].G = primitiva.G;
+			img->MatrizDesenho[baixo][x].B = primitiva.B;
+	
+			pintaDesenho(img, primitiva, x, baixo);
+		}
 
 }
 
 void funcaoPintar (Imagem *img, Cor primitiva) {
 	Ponto posicao;
-	Cor inicial;
-	unsigned short int cima, baixo, direita, esquerda;
+	//Cor inicial;
 
 	printf("Insira os valores x e y do ponto inicial:\n");
 
 	scanf("%d %d", &posicao.x, &posicao.y);
-
+/*
 	inicial.R = img->MatrizDesenho[posicao.y][posicao.x].R;
 	inicial.G = img->MatrizDesenho[posicao.y][posicao.x].G;
 	inicial.B = img->MatrizDesenho[posicao.y][posicao.x].B;
+*/
+	img->MatrizDesenho[posicao.y][posicao.x].R = primitiva.R;
+	img->MatrizDesenho[posicao.y][posicao.x].G = primitiva.G;
+	img->MatrizDesenho[posicao.y][posicao.x].B = primitiva.B;
+
+	pintaDesenho(img, primitiva, posicao.x, posicao.y);
 
 
 

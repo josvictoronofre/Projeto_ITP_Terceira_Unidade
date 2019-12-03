@@ -191,4 +191,6 @@ void printaOpcoes () {
 	printf("rect - Desenha o retangulo com ponto inicial, altura e largura especificados\n");
 
 	printf("polygon - Desenha o poligono com a quantidade de pontos e os pontos especificados\n");
+
+	printf("fill - Funciona como o balde de tinta do paint\n");
 }
