@@ -318,7 +318,7 @@ bool checaVetor (Ponto *vetor, int contador) {
 	return false;
 }
 
-void pintaDesenho (Imagem *img, Cor primitiva, int x, int y) {
+void pintaDesenho (Imagem *img, Cor primitiva, Cor inicial, int x, int y) {
 
 	short int cima, direita, esquerda, baixo;
 
@@ -328,8 +328,8 @@ void pintaDesenho (Imagem *img, Cor primitiva, int x, int y) {
 	direita = x;
 	esquerda = x;
 		
-		cima++;
-		if (cima < img->Nlinhas) {
+		baixo++;
+		if (baixo < img->Nlinhas) {
 
 			img->MatrizDesenho[cima][x].R = primitiva.R;
 			img->MatrizDesenho[cima][x].G = primitiva.G;
@@ -360,9 +360,9 @@ void pintaDesenho (Imagem *img, Cor primitiva, int x, int y) {
 			pintaDesenho(img, primitiva, esquerda, y);
 		}
 
-		baixo--;
+		cima--;
 
-		if (baixo >= 0) {
+		if (cima >= 0) {
 
 			img->MatrizDesenho[baixo][x].R = primitiva.R;
 			img->MatrizDesenho[baixo][x].G = primitiva.G;
@@ -380,16 +380,18 @@ void funcaoPintar (Imagem *img, Cor primitiva) {
 	printf("Insira os valores x e y do ponto inicial:\n");
 
 	scanf("%d %d", &posicao.x, &posicao.y);
-/*
+
+	checaPonto(&posicao.x, &posicao.y, img->Ncolunas, img->Nlinhas);
+
 	inicial.R = img->MatrizDesenho[posicao.y][posicao.x].R;
 	inicial.G = img->MatrizDesenho[posicao.y][posicao.x].G;
 	inicial.B = img->MatrizDesenho[posicao.y][posicao.x].B;
-*/
+
 	img->MatrizDesenho[posicao.y][posicao.x].R = primitiva.R;
 	img->MatrizDesenho[posicao.y][posicao.x].G = primitiva.G;
 	img->MatrizDesenho[posicao.y][posicao.x].B = primitiva.B;
 
-	pintaDesenho(img, primitiva, posicao.x, posicao.y);
+	pintaDesenho(img, primitiva, inicial, posicao.x, posicao.y);
 
 
 
