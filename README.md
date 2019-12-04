@@ -16,3 +16,9 @@ rect | Desenha um retângulo nas posições x, y, e com tamanho especificados
 polygon | Desenha um poligono delimitado por uma lista de pontos
 save | Salva a imagem atual em um arquivo usando o formato ppm
 open | Carrega uma imagem ppm no programa para futuras operações de desenho
+
+### Compilacao e execucao
+#### Para baixar o codigo na sua maquina:
+```bash
+git clone https://github.com/josvictoronofre/Projeto_ITP_Terceira_Unidade.git
+```
