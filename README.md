@@ -17,7 +17,7 @@ polygon | Desenha um poligono delimitado por uma lista de pontos
 save | Salva a imagem atual em um arquivo usando o formato ppm
 open | Carrega uma imagem ppm no programa para futuras operações de desenho
 
-### Compilacao e execucao
+### Compilação e execução
 #### Para baixar o código na sua maquina:
 ```bash
 git clone https://github.com/josvictoronofre/Projeto_ITP_Terceira_Unidade.git
@@ -35,6 +35,10 @@ Compilado com sucesso, para executar digite ./desenho
 # Quando terminar a execução digite o seguinte comando para limpar os arquivos binários:
 $ make clean
 
-# O terminal deve exibirÇ
+# O terminal deve exibir:
 executavel deletado com sucesso!
+```
+#### Para executar:
+```bash
+$ ./desenho
 ```
