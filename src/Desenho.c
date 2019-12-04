@@ -45,7 +45,7 @@ void leDesenho (Imagem *img) {
 	FILE *desenho = fopen("Imagem.ppm", "r");
 
 	if (desenho == NULL) {
-		printf("Nao foi possivel ler o arquivo!\n");
+		printf("Não foi possível ler o arquivo!\n");
 		return;
 	}
 
@@ -102,7 +102,7 @@ void salvaDesenho (Imagem *img) {
 	int i, j;
 
 	if (img->MatrizDesenho == NULL) {
-		printf("Nao existe uma informacao valida para ser salva no arquivo!\n");
+		printf("É necessário carregar a informação de uma imagem existente primeiro!\n");
 		return;
 	}
 

@@ -47,9 +47,6 @@ int main (void) {
 				desenhaPoligono(&desenho, primitiva);
 			}
 		}
-		else if (strcmp(controle, "fill") == 0) {
-			funcaoPintar(&desenho, primitiva);
-		}
 		else if (controle[0] == '?') {
 			printaOpcoes();
 		}

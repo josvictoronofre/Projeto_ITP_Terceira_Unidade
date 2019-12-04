@@ -5,32 +5,23 @@ void poligonoRetangulo (Imagem *img, Cor primitiva) {
 	int i, j, altura, largura, pivoaltura, pivolargura;
 	Ponto pivo;
 
-	printf("Insira os valores x e y do retangulo:\n");
+	printf("Insira os valores x e y do retângulo:\n");
 
 	scanf("%d %d", &pivo.x, &pivo.y);
 
 	checaPonto(&pivo.x, &pivo.y, img->Ncolunas, img->Nlinhas);
 
-	printf("Insira a altura e largura do retangulo:\n");
+	printf("Insira a altura e largura do retângulo:\n");
 
 	scanf("%d %d", &pivoaltura, &pivolargura);
 
-	while (1) {
-		if ((pivo.x + pivolargura) >= img->Ncolunas || (pivo.y + pivoaltura) >= img->Nlinhas) {
-			printf("Valores de altura e/ou largura invalidos. Insira novos valores:\n");
+	pivoaltura += pivo.y;
+	pivolargura += pivo.x;
 
-			scanf("%d %d", &pivoaltura, &pivolargura);
-		} else {
-			altura = pivoaltura;
-			largura = pivolargura;
-			break;
-		}
-	}
+	checaPonto(&pivolargura, &pivoaltura, img->Ncolunas, img->Nlinhas);
 	
-
-
-	altura += pivo.y;
-	largura += pivo.x;
+	altura = pivoaltura;
+	largura = pivolargura;
 
 	for (i = pivo.x; i < largura; i++) {
 		img->MatrizDesenho[pivo.y][i].R = primitiva.R;
@@ -206,7 +197,7 @@ void checaPonto (int *x, int *y, int xmax, int ymax) {
 	ymax--;
 	while (1) {
 		if (*x > xmax || *x < 0 || *y > ymax || y < 0) {
-			printf("valores das cordenadas do ponto invalidos!\n");
+			printf("valores das cordenadas do ponto inválidos!\n");
 			printf("Insira os valores novamente:\n");
 			scanf("%d %d", x, y);
 		} else
@@ -324,80 +315,3 @@ bool checaVetor (Ponto *vetor, int contador) {
 	return false;
 }
 
-void pintaDesenho (Imagem *img, Cor primitiva, int x, int y) {
-
-	short int cima, direita, esquerda, baixo;
-	
-	if (x >= img->Ncolunas || x < 0 || y >= img->Nlinhas || y < 0) {
-		return;
-	}	
-		
-		baixo++;
-		if (baixo < (img->Nlinhas - 1)) {
-
-			img->MatrizDesenho[baixo][x].R = primitiva.R;
-			img->MatrizDesenho[baixo][x].G = primitiva.G;
-			img->MatrizDesenho[baixo][x].B = primitiva.B;
-		
-			pintaDesenho(img, primitiva, x, baixo);
-		}
-
-		direita++;
-
-		if (direita < img->Ncolunas) {
-
-			img->MatrizDesenho[y][direita].R = primitiva.R;
-			img->MatrizDesenho[y][direita].G = primitiva.G;
-			img->MatrizDesenho[y][direita].B = primitiva.B;
-
-			pintaDesenho(img, primitiva, direita, y);
-		}
-
-		esquerda--;
-
-		if (esquerda >= 0) {
-
-			img->MatrizDesenho[y][esquerda].R = primitiva.R;
-			img->MatrizDesenho[y][esquerda].G = primitiva.G;
-			img->MatrizDesenho[y][esquerda].B = primitiva.B;
-
-			pintaDesenho(img, primitiva, esquerda, y);
-		}
-
-		cima--;
-
-		if (cima >= 0) {
-
-			img->MatrizDesenho[cima][x].R = primitiva.R;
-			img->MatrizDesenho[cima][x].G = primitiva.G;
-			img->MatrizDesenho[cima][x].B = primitiva.B;
-	
-			pintaDesenho(img, primitiva, x, cima);
-		}
-
-}
-
-void funcaoPintar (Imagem *img, Cor primitiva) {
-	Ponto posicao;
-	//Cor inicial;
-
-	printf("Insira os valores x e y do ponto inicial:\n");
-
-	scanf("%d %d", &posicao.x, &posicao.y);
-
-	checaPonto(&posicao.x, &posicao.y, img->Ncolunas, img->Nlinhas);
-	/*
-	inicial.R = img->MatrizDesenho[posicao.y][posicao.x].R;
-	inicial.G = img->MatrizDesenho[posicao.y][posicao.x].G;
-	inicial.B = img->MatrizDesenho[posicao.y][posicao.x].B;
-	*/
-	img->MatrizDesenho[posicao.y][posicao.x].R = primitiva.R;
-	img->MatrizDesenho[posicao.y][posicao.x].G = primitiva.G;
-	img->MatrizDesenho[posicao.y][posicao.x].B = primitiva.B;
-	printf("Chegou aqui!\n");
-
-	pintaDesenho(img, primitiva, posicao.x, posicao.y);
-
-
-
-}
