@@ -27,9 +27,7 @@ int main (void) {
 			
 		}
 		else if (strcmp(controle, "open") == 0) {
-			if (checaCondicoes(&desenho)) {
-				leDesenho(&desenho);
-			}
+			leDesenho(&desenho);
 		}
 		else if (strcmp(controle, "save") == 0) {
 			salvaDesenho(&desenho);

@@ -44,6 +44,11 @@ void leDesenho (Imagem *img) {
 
 	FILE *desenho = fopen("Imagem.ppm", "r");
 
+	if (desenho == NULL) {
+		printf("Nao foi possivel ler o arquivo!\n");
+		return;
+	}
+
 	//Salva o tipo de imagem PPM, as dimensoes e o valor maximo para cada componente do pixel
 	fgets(img->tipoImagem, 3, desenho); 
 
@@ -89,6 +94,7 @@ void liberaMemoria (Imagem *img) {
 	}
 	//Libera as linhas
 	free(img->MatrizDesenho);
+	img->MatrizDesenho = NULL;
 }
 
 //Salva as alteracoes no arquivo
