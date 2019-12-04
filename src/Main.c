@@ -8,6 +8,8 @@ int main (void) {
 	
 	system("clear");
 
+	printaOpcoes();
+
 	while (ativador == 0) {
 
 		printf("O que deseja fazer?\n");
