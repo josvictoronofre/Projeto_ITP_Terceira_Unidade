@@ -1,6 +1,4 @@
-# Projeto ITP Terceira Unidade - Desenho Gráfico
-
-Projeto de ITP da Terceira Unidade do Semestre 2019.2 do curso de Tecnologia da Informacão
+# Projeto Desenho Gráfico - ITP 2019.2
 
 ## Desenvolvedor
 
