@@ -327,21 +327,19 @@ bool checaVetor (Ponto *vetor, int contador) {
 void pintaDesenho (Imagem *img, Cor primitiva, int x, int y) {
 
 	short int cima, direita, esquerda, baixo;
-
-	cima = y;
-	baixo = y;
-
-	direita = x;
-	esquerda = x;
+	
+	if (x >= img->Ncolunas || x < 0 || y >= img->Nlinhas || y < 0) {
+		return;
+	}	
 		
 		baixo++;
-		if (baixo < img->Nlinhas) {
+		if (baixo < (img->Nlinhas - 1)) {
 
 			img->MatrizDesenho[baixo][x].R = primitiva.R;
 			img->MatrizDesenho[baixo][x].G = primitiva.G;
 			img->MatrizDesenho[baixo][x].B = primitiva.B;
 		
-			pintaDesenho(img, primitiva, x, cima);
+			pintaDesenho(img, primitiva, x, baixo);
 		}
 
 		direita++;
@@ -374,7 +372,7 @@ void pintaDesenho (Imagem *img, Cor primitiva, int x, int y) {
 			img->MatrizDesenho[cima][x].G = primitiva.G;
 			img->MatrizDesenho[cima][x].B = primitiva.B;
 	
-			pintaDesenho(img, primitiva, x, baixo);
+			pintaDesenho(img, primitiva, x, cima);
 		}
 
 }
