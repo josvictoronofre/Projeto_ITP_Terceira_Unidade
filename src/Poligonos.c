@@ -396,6 +396,7 @@ void funcaoPintar (Imagem *img, Cor primitiva) {
 	img->MatrizDesenho[posicao.y][posicao.x].R = primitiva.R;
 	img->MatrizDesenho[posicao.y][posicao.x].G = primitiva.G;
 	img->MatrizDesenho[posicao.y][posicao.x].B = primitiva.B;
+	printf("Chegou aqui!\n");
 
 	pintaDesenho(img, primitiva, posicao.x, posicao.y);
 
