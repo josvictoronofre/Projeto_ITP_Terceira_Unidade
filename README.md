@@ -22,3 +22,7 @@ open | Carrega uma imagem ppm no programa para futuras operações de desenho
 ```bash
 git clone https://github.com/josvictoronofre/Projeto_ITP_Terceira_Unidade.git
 ```
+#### Apos baixar o repositorio, va ate a pasta raiz e digite o seguinte comando no terminal:
+```bash
+$ make all
+```
