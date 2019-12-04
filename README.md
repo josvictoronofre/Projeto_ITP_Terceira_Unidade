@@ -4,4 +4,9 @@ Projeto de ITP da Terceira Unidade do Semestre 2019.2 do curso de Tecnologia da 
 
 ## Desenvolvedor
 
-* [Jose Victor Onofre](https://github.com/josvictoronofre)
+* [José Victor Onofre](https://github.com/josvictoronofre)
+
+### Primitivas Obrigatorias
+Primitiva | Descricao | Status
+----------|-----------|-------
+image     | cria O arquivo Imagem|Completo
