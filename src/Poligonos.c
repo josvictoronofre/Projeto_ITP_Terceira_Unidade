@@ -1,6 +1,6 @@
 #include "Poligonos.h"
 
-
+//Desenha o retangulo a partir do ponto inicial, altura e largura
 void poligonoRetangulo (Imagem *img, Cor primitiva) {
 	int i, j, altura, largura, pivoaltura, pivolargura;
 	Ponto pivo;
@@ -44,7 +44,7 @@ void poligonoRetangulo (Imagem *img, Cor primitiva) {
 		img->MatrizDesenho[j][largura].B = primitiva.B;
 	}
 }
-
+//Desenha a reta com qualquer inclinacao possivel
 void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva, Ponto *vetor, int *contador) {
 	int i = 0, j = 0;
 	float anguloy, angulox, deslocacao = 0;
@@ -191,7 +191,7 @@ void desenhaReta (Imagem *img, Ponto origem, Ponto final, Cor primitiva, Ponto *
 		}
 	}
 }
-
+//checa se os parametros dos pontos sao aceitaveis
 void checaPonto (int *x, int *y, int xmax, int ymax) {
 	xmax--;
 	ymax--;
@@ -205,40 +205,14 @@ void checaPonto (int *x, int *y, int xmax, int ymax) {
 
 	}
 }
-/*
-void DesenhaCirculo (Imagem *img, Cor primitiva) {
-	unsigned short int x, y, i, j, raio;
-	Imagem pivo;
-	pivo.Nlinhas = img->Nlinhas;
-	pivo.Ncolunas = img->Ncolunas;
-
-	alocaMemoria(&pivo);
-
-	passaDesenho(&pivo, img);
-
-	printf("Insira as coordenadas do centro do circulo:\n");
-
-	scanf("%hu %hu", &x, &y);
-
-	checaPonto(&x, &y, img->Ncolunas, img->Nlinhas);
-
-	printf("Insira o raio do circulo:\n");
-
-	scanf("%hu", &raio);
-
-	for (i = 0; i < raio; i++) {
-		if ((i % 2) == 0) {
-			pivo.MatrizDesenho[y+raio][x+(i/2)].R = primitiva.R;
-		}
-	}
-}
-*/
+//Desenha o poligono a partir de um vetor de pontos utilizando a funcao desenhaReta
 void desenhaPoligono (Imagem *img, Cor primitiva) {
 	int Npontos, i, contador = 0;
 	Ponto *poligono;
 	Ponto *vetor;
 	Imagem pivo;
 
+	//vetor que vai armazenar todos os pontos modificados pela funcao desenhaReta
 	vetor = (Ponto *) calloc(2240, sizeof(Ponto));
 
 	pivo.Nlinhas = img->Nlinhas;
@@ -291,14 +265,14 @@ void desenhaPoligono (Imagem *img, Cor primitiva) {
 	
 }
 	
-
+//Salva o ponto modificado pela reta no vetor dos pontos
 void salvaPonto(Ponto *vetor, const int coordenadax, const int coordenaday, int *contador) {
 	*contador = (*contador) + 1;
 
 	vetor[(*contador) - 1].x = coordenadax;
 	vetor[(*contador) - 1].y = coordenaday;
 }
-
+//verifica se o vetor de todos os pontos do poligono se repete
 bool checaVetor (Ponto *vetor, int contador) {
 	unsigned long int i, j;
 	for (i = 0; i < (contador - 1); i++) {
@@ -315,3 +289,116 @@ bool checaVetor (Ponto *vetor, int contador) {
 	return false;
 }
 
+void funcaoFill (Imagem *img, Cor primitiva) {
+	Cor inicial;
+	Ponto escolha;
+	
+	printf("Insira as coordenadas do ponto inicial:\n");
+
+	scanf("%d %d", &escolha.x, &escolha.y);
+
+	checaPonto(&escolha.x, &escolha.y, img->Ncolunas, img->Nlinhas);
+
+	inicial.R = img->MatrizDesenho[escolha.y][escolha.x].R;
+	inicial.G = img->MatrizDesenho[escolha.y][escolha.x].G;
+	inicial.B = img->MatrizDesenho[escolha.y][escolha.x].B;
+
+	img->MatrizDesenho[escolha.y][escolha.x].R = primitiva.R;
+	img->MatrizDesenho[escolha.y][escolha.x].G = primitiva.G;
+	img->MatrizDesenho[escolha.y][escolha.x].B = primitiva.B;
+
+	FillUp(img, primitiva, escolha, inicial);
+}
+
+void FillUp (Imagem *img, Cor primitiva, Ponto origem, Cor inicial) {
+	unsigned short int resto, i;
+
+	if (origem.y > 0 && FillCor(img, inicial, origem)) {
+		resto = origem.y;
+
+			for (i = 0; i < resto; i++) {	
+
+			img->MatrizDesenho[origem.y-resto][origem.x].R = primitiva.R;
+			img->MatrizDesenho[origem.y-resto][origem.x].G = primitiva.G;
+			img->MatrizDesenho[origem.y-resto][origem.x].B = primitiva.B;
+			
+			FillRight(img, primitiva, origem, inicial);
+			FillLeft(img, primitiva, origem, inicial);
+			FillDown(img, primitiva, origem, inicial);
+		}
+	}
+}
+
+void FillRight (Imagem *img, Cor primitiva, Ponto origem, Cor inicial) {
+	unsigned short int resto, i;
+
+	if (origem.x < 639 && FillCor(img, inicial, origem)) {
+		resto = 640 - origem.x;
+
+		for (i = 0; i < resto; i++) {
+
+			img->MatrizDesenho[origem.y][origem.x+resto].R = primitiva.R;
+			img->MatrizDesenho[origem.y][origem.x+resto].G = primitiva.G;
+			img->MatrizDesenho[origem.y][origem.x+resto].B = primitiva.B;
+			
+			FillUp(img, primitiva, origem, inicial);
+			FillLeft(img, primitiva, origem, inicial);
+			FillDown(img, primitiva, origem, inicial);
+		}
+
+	}
+}
+
+void FillLeft (Imagem *img, Cor primitiva, Ponto origem, Cor inicial) {
+	unsigned short int resto, i;
+
+	if (origem.x > 0 && FillCor(img, inicial, origem)) {
+		resto = origem.x;
+
+		for (i = 0; i < resto; i++) {
+
+			img->MatrizDesenho[origem.y][origem.x-resto].R = primitiva.R;
+			img->MatrizDesenho[origem.y][origem.x-resto].G = primitiva.G;
+			img->MatrizDesenho[origem.y][origem.x-resto].B = primitiva.B;
+
+			FillUp(img, primitiva, origem, inicial);
+			FillRight(img, primitiva, origem, inicial);
+			FillDown(img, primitiva, origem, inicial);
+
+		}	
+
+	}
+}
+
+void FillDown (Imagem *img, Cor primitiva, Ponto origem, Cor inicial) {
+	unsigned short int resto, i;
+
+	if (origem.y < 479 && FillCor(img, inicial, origem)) {
+		resto = 480 - origem.y;
+
+		for (i = 0; i < resto; i++) {
+
+			img->MatrizDesenho[origem.y+resto][origem.x].R = primitiva.R;
+			img->MatrizDesenho[origem.y+resto][origem.x].G = primitiva.G;
+			img->MatrizDesenho[origem.y+resto][origem.x].B = primitiva.B;
+			
+			FillRight(img, primitiva, origem, inicial);
+			FillLeft(img, primitiva, origem, inicial);
+			FillUp(img, primitiva, origem, inicial);
+		}
+
+	}
+}
+
+bool FillCor (Imagem *img, Cor inicial, Ponto origem) {
+
+	if (img->MatrizDesenho[origem.y][origem.x].R == inicial.R) {
+		if (img->MatrizDesenho[origem.y][origem.x].G == inicial.G) {
+			if (img->MatrizDesenho[origem.y][origem.x].B == inicial.B) {
+				return false;
+			}
+			return true;
+		}
+	}
+	return true;
+}

@@ -35,3 +35,6 @@ $ make clean
 
 - O terminal deve exibir:
 executavel deletado com sucesso!
+
+Observações:
+ - O comando image vai unicamente criar a imagem no formato ppm, para se fazer qualquer alteração depois é necessário carregar as informações do arquivo para o programa utilizando o comando open
